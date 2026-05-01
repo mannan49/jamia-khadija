@@ -87,7 +87,7 @@
           <div class="col-span-3 hidden md:flex flex-col gap-1 items-center">
             @if (getLessonByType(record, 'Sabaq'); as sabaq) {
               <span class="bg-blue-100 text-blue-700 text-xs px-2 py-0.5 rounded-full">
-                پارہ {{ sabaq?.ParaNumber }}
+                {{ sabaq?.ParaNumber }}
               </span>
               <span class="text-xs text-gray-500">غلطیاں: {{ sabaq?.Mistakes }}</span>
             } @else {
@@ -99,7 +99,7 @@
           <div class="col-span-3 hidden md:flex flex-col gap-1 items-center">
             @if (getLessonByType(record, 'Sabqi'); as sabqi) {
               <span class="bg-green-100 text-green-700 text-xs px-2 py-0.5 rounded-full">
-                پارہ {{ sabqi?.ParaNumber }}
+                {{ sabqi?.ParaNumber }}
               </span>
               <span class="text-xs text-gray-500">غلطیاں: {{ sabqi?.Mistakes }}</span>
             } @else {
@@ -111,7 +111,7 @@
           <div class="col-span-3 hidden md:flex flex-col gap-1 items-center">
             @if (getLessonByType(record, 'Manzil'); as manzil) {
               <span class="bg-purple-100 text-purple-700 text-xs px-2 py-0.5 rounded-full">
-                پارہ {{ manzil?.ParaNumber }}
+                {{ manzil?.ParaNumber }}
               </span>
               <span class="text-xs text-gray-500">غلطیاں: {{ manzil?.Mistakes }}</span>
             } @else {

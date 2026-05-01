@@ -34,8 +34,8 @@ export class LoginComponent {
   }
   initializeForm() {
     this.loginForm = this.formBuilder.group({
-      email: ["demo.user@dareecha.com", [Validators.required, customEmailValidator()]],
-      password: ["Pakistan@123", [Validators.required]],
+      email: [String.Empty, [Validators.required, customEmailValidator()]],
+      password: [String.Empty, [Validators.required]],
     });
   }
 

@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
 import { AuthGuard } from '@shared/guard/auth.guard';
 
@@ -17,30 +17,27 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        loadChildren: () =>
-          import('@features/dashboard/dashboard.module').then(m => m.DashboardModule),
+        loadChildren: () => import('@features/dashboard/dashboard.module').then(m => m.DashboardModule),
       },
       {
         path: 'students',
-        loadChildren: () =>
-          import('@features/students/students.module').then(m => m.StudentsModule),
+        loadChildren: () => import('@features/students/students.module').then(m => m.StudentsModule),
       },
       {
         path: 'lesson-record',
-        loadChildren: () =>
-          import('@features/lesson-record/lesson-record.module').then(m => m.LessonRecordModule),
+        loadChildren: () => import('@features/lesson-record/lesson-record.module').then(m => m.LessonRecordModule),
       },
       {
         path: 'library-books',
-        loadChildren: () =>
-          import('./features/library-books/library-books.module').then(m => m.LibraryBooksModule),
+        loadChildren: () => import('./features/library-books/library-books.module').then(m => m.LibraryBooksModule),
       },
       {
         path: 'library-records',
-        loadChildren: () =>
-          import('./features/library-records/library-records.module').then(
-            m => m.LibraryRecordsModule
-          ),
+        loadChildren: () => import('./features/library-records/library-records.module').then(m => m.LibraryRecordsModule),
+      },
+      {
+        path: 'attendance',
+        loadChildren: () => import('./features/attendance/attendance.module').then(m => m.AttendanceModule),
       },
     ],
   },
@@ -54,7 +51,11 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [
+    RouterModule.forRoot(routes, {
+      preloadingStrategy: PreloadAllModules,
+    }),
+  ],
   exports: [RouterModule],
 })
 export class AppRoutingModule {}

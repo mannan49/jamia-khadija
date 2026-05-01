@@ -40,6 +40,7 @@ export class FilesUploadContainerComponent {
   ];
 
   @Input() resetForm = false;
+  @Input() showFileUpload = false;
   @Input() fileAttachment = new Attachment();
   @Input() imageAttachment = new Attachment();
   @Input() filePreview: string | ArrayBuffer | null = null;
@@ -61,6 +62,8 @@ export class FilesUploadContainerComponent {
     if (changes['resetForm']?.currentValue === true) {
       this.filePreview = null;
       this.coverImagePreview = null;
+      this.imageUploadPercentage = 0;
+      this.fileUploadPercentage = 0;
       this.isFileUploadingCompleted = false;
       this.isImageUploadingCompleted = false;
       this.fileAttachment = new Attachment();
@@ -153,7 +156,7 @@ export class FilesUploadContainerComponent {
       this.isImageUploadingCompleted = false;
       this.coverImagePreview = null;
     } else if (type === 'pdf') {
-      this.isFileUploadingCompleted = null;
+      this.isFileUploadingCompleted = false;
       this.filePreview = null;
     }
   }

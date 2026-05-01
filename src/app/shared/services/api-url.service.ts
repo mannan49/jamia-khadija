@@ -107,4 +107,26 @@ export class ApiUrlService {
   static generatePreSignedUrl(fileType: string) {
     return `${this.apiBaseUrl}/S3/generate-upload-url?fileType=${fileType}`;
   }
+
+  // #endregion;
+
+  //#region Attendance
+
+  static addAttendanceBatchUrl(): string {
+    return `${this.apiBaseUrl}/Attendance/batch`;
+  }
+
+  static filterAttendanceUrl(): string {
+    return `${this.apiBaseUrl}/Attendance/advance-search`;
+  }
+
+  static attendanceByIdUrl(id: string): string {
+    return `${this.apiBaseUrl}/Attendance/${id}`;
+  }
+
+  static attendanceByStudentIdUrl(studentId: string): string {
+    return `${this.apiBaseUrl}/Attendance/student/${studentId}`;
+  }
+
+  //#endregion
 }

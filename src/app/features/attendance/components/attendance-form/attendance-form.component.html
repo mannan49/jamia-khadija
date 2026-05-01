@@ -1,0 +1,121 @@
+<div class="px-4 sm:px-6 lg:px-8 py-4">
+  <!-- Page Header -->
+  <div class="flex items-center justify-between mb-4">
+    <app-button label="محفوظ کریں" [loading]="saving" [className]="'bg-primary'" (click)="onSaveAttendance()" />
+    <h1 class="text-2xl font-bold">حاضری درج کریں</h1>
+  </div>
+
+  <!-- Date + Class selectors -->
+  <div class="bg-main rounded-2xl shadow-sm p-4 mb-4 grid grid-cols-1 md:grid-cols-2 gap-4">
+    <div class="flex flex-col gap-1">
+      <label class="text-sm font-semibold text-gray-600">تاریخ</label>
+      <input type="date" [(ngModel)]="selectedDate" class="border border-gray-300 rounded-xl px-3 py-2 bg-white focus:border-primary" />
+    </div>
+  </div>
+
+  @if (studentsLoading) {
+    <app-loader />
+  } @else if (attendanceEntries.length > 0) {
+    <!-- Live summary bar -->
+    <div class="grid grid-cols-3 gap-3 mb-4">
+      <div class="bg-green-50 border border-green-200 rounded-2xl p-3 text-center">
+        <div class="text-2xl font-bold text-green-700">{{ presentCount }}</div>
+        <div class="text-xs text-green-600 mt-1">حاضر</div>
+      </div>
+      <div class="bg-red-50 border border-red-200 rounded-2xl p-3 text-center">
+        <div class="text-2xl font-bold text-red-700">{{ absentCount }}</div>
+        <div class="text-xs text-red-600 mt-1">غیر حاضر</div>
+      </div>
+      <div class="bg-yellow-50 border border-yellow-200 rounded-2xl p-3 text-center">
+        <div class="text-2xl font-bold text-yellow-700">{{ leaveCount }}</div>
+        <div class="text-xs text-yellow-600 mt-1">رخصت</div>
+      </div>
+    </div>
+
+    <!-- Bulk actions -->
+    <div class="bg-main rounded-2xl shadow-sm px-4 py-3 mb-3 flex items-center justify-between flex-wrap gap-2">
+      <div class="flex gap-2">
+        <button
+          (click)="markAll('Present')"
+          class="text-xs px-3 py-1 rounded-full bg-green-100 text-green-700 hover:bg-green-200 transition-colors"
+        >
+          سب حاضر
+        </button>
+        <button
+          (click)="markAll('Absent')"
+          class="text-xs px-3 py-1 rounded-full bg-red-100 text-red-700 hover:bg-red-200 transition-colors"
+        >
+          سب غیر حاضر
+        </button>
+        <button
+          (click)="markAll('Leave')"
+          class="text-xs px-3 py-1 rounded-full bg-yellow-100 text-yellow-700 hover:bg-yellow-200 transition-colors"
+        >
+          سب رخصت
+        </button>
+      </div>
+      <span class="text-sm text-gray-500">کل طلبہ: {{ attendanceEntries.length }}</span>
+    </div>
+
+    <!-- Attendance register rows -->
+    <div class="flex flex-col gap-2">
+      @for (entry of attendanceEntries; track $index; let i = $index) {
+        <div
+          class="bg-main rounded-2xl shadow-sm px-4 py-3 flex flex-col md:flex-row md:items-center gap-3"
+          [class.border-r-4]="true"
+          [class.border-green-400]="entry.Status === 'Present'"
+          [class.border-red-400]="entry.Status === 'Absent'"
+          [class.border-yellow-400]="entry.Status === 'Leave'"
+        >
+          <!-- Student name + number -->
+          <div class="flex items-center gap-3 flex-1">
+            <div class="w-8 h-8 rounded-full bg-primary bg-opacity-10 flex items-center justify-center shrink-0">
+              <span class="text-primary text-sm font-bold">{{ i + 1 }}</span>
+            </div>
+            <div>
+              <div class="font-semibold">{{ entry.StudentName }}</div>
+              <div class="text-xs text-gray-500">{{ entry.Class }}</div>
+            </div>
+          </div>
+
+          <!-- Status toggle buttons -->
+          <div class="flex gap-2 shrink-0">
+            @for (opt of statusOptions; track opt.value) {
+              <button
+                (click)="setStatus(entry, opt.value)"
+                class="text-xs px-3 py-1.5 rounded-full font-medium transition-colors"
+                [ngClass]="getStatusBtnClass(entry, opt.value)"
+              >
+                {{ opt.label }}
+              </button>
+            }
+          </div>
+
+          <!-- Leave reason (shows only when Leave is selected) -->
+          @if (entry.Status === 'Leave') {
+            <input
+              [(ngModel)]="entry.LeaveReason"
+              placeholder="رخصت کی وجہ (اختیاری)"
+              class="border border-gray-200 rounded-xl px-3 py-1.5 text-sm focus:border-primary md:w-48"
+            />
+          }
+        </div>
+      }
+    </div>
+
+    <!-- Save button (bottom) -->
+    <div class="mt-4 flex justify-center">
+      <app-button label="حاضری محفوظ کریں" [loading]="saving" [className]="'bg-primary px-10'" (click)="onSaveAttendance()" />
+    </div>
+  } @else if (selectedClass && !studentsLoading) {
+    <div class="flex bg-main py-10 rounded-2xl flex-col justify-center items-center gap-2 mt-4">
+      <span class="icon-clear text-5xl"></span>
+      <h2 class="text-xl">اس جماعت میں کوئی طالبعلم نہیں۔</h2>
+    </div>
+  } @else {
+    <div class="flex bg-main py-10 rounded-2xl flex-col justify-center items-center gap-2 mt-4">
+      <span class="icon-users text-5xl text-gray-300"></span>
+      <h2 class="text-xl text-gray-400">جماعت منتخب کریں</h2>
+    </div>
+  }
+</div>

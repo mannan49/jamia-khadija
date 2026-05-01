@@ -53,7 +53,7 @@
                 [disabled]="lessonsArray.length === 1"
                 class="text-secondary disabled:opacity-30 disabled:cursor-not-allowed"
               >
-                <span class="icon-delete text-xl"></span>
+                <span class="icon-delete text-xl cursor-pointer"></span>
               </button>
               <h3 class="font-semibold text-base">سبق {{ i + 1 }}</h3>
             </div>
@@ -66,12 +66,8 @@
                 controlName="type"
                 [options]="lessonTypesList"
               />
-              <app-select
-                label="پارہ نمبر"
-                placeholder="پارہ منتخب کریں"
-                controlName="paraNumber"
-                [options]="parasList"
-              />
+              <app-input label="سبق کا عنوان"  placeholder="سبق کا عنوان" controlName="paraNumber" />
+              
             </div>
 
             <!-- Row: Listener + Mistakes -->

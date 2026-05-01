@@ -66,7 +66,7 @@ export class StudentFormComponent {
       parentCnic: [String.Empty],
       phone: [String.Empty],
       address: [String.Empty],
-      class: [String.Empty],
+      class: ['حفظ'],
       enrollmentDate: [String.Empty, Validators.required],
       registrationNumber: [String.Empty],
       department: [String.Empty],
@@ -103,7 +103,7 @@ export class StudentFormComponent {
       parentCnic: student?.ParentCnic,
       phone: student?.Phone,
       address: student?.Address,
-      class: student?.Class,
+      class: student?.Class ?? 'حفظ',
       enrollmentDate: student?.EnrollmentDate?.substring(0, 10),
       registrationNumber: student?.RegistrationNumber,
       department: student?.Department,
@@ -142,7 +142,6 @@ export class StudentFormComponent {
   }
 
   editStudent() {
-    // I think we should send it from FE in case of 
     this.loading = true;
     this.apiHttpService
       .updateStudent(this.existingStudentId, this.studentForm.value)
@@ -173,7 +172,7 @@ export class StudentFormComponent {
       parentCnic: String.Empty,
       phone: String.Empty,
       address: String.Empty,
-      class: String.Empty,
+      class: 'حفظ',
       enrollmentDate: String.Empty,
       registrationNumber: String.Empty,
       department: String.Empty,

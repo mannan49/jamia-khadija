@@ -4,7 +4,7 @@
   <div class="col-span-2">والد کا نام</div>
   <div class="col-span-1 text-center">داخلہ نمبر</div>
   <div class="col-span-2 text-center">تاریخِ داخلہ</div>
-  <div class="col-span-2 text-center">شعبہ</div>
+  <div class="col-span-2 text-center">شناختی کارڈ</div>
   <div class="col-span-2 text-center">رابطہ نمبر</div>
   <div class="col-span-2 text-center">اقدامات</div>
 </div>
@@ -20,7 +20,7 @@
       {{ student?.RegistrationNumber }}
     </div>
     <div class="col-span-2 text-center hidden md:block">{{ student?.EnrollmentDate | date }}</div>
-    <div class="col-span-2 text-center text-sm hidden md:block">{{ student?.Department }}</div>
+    <div class="col-span-2 text-center text-sm hidden md:block">{{ student?.Cnic }}</div>
     <div class="col-span-2 text-center text-sm hidden md:block">{{ student?.Phone }}</div>
 
     <!-- Actions — always visible -->

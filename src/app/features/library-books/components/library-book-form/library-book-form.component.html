@@ -57,7 +57,7 @@
       </div>
 
       <!-- Row 4: Edition + Total Copies + Available Copies -->
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mt-5">
+      <!-- <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mt-5">
         <app-input
           label="ایڈیشن"
           placeholder="مثلاً پہلا، دوسرا"
@@ -75,7 +75,7 @@
           placeholder="دستیاب نسخوں کی تعداد"
           controlName="availableCopies"
         />
-      </div>
+      </div> -->
 
       <!-- Row 5: Description -->
       <div class="mt-5">
@@ -87,15 +87,14 @@
       </div>
 
       <!-- Row 6: File Upload -->
-      <!-- <div class="mt-5">
+      <div class="mt-5">
         <app-files-upload-container
           [resetForm]="resetMediaState"
-          [existingCoverImageUrl]="existingCoverImageUrl"
-          [existingFileUrl]="existingFileUrl"
-          (coverImageUploaded)="handleCoverImageUploaded($event)"
-          (fileUploaded)="handleFileUploaded($event)"
+          [imageAttachment]="coverImage"
+          [coverImagePreview]="existingCoverImageUrl"
+          (imageUploaded)="handleCoverImageUploaded($event)"
         />
-      </div> -->
+      </div>
 
       <!-- Submit -->
       <div class="mt-6">

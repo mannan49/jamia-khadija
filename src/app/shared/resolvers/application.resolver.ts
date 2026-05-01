@@ -25,8 +25,6 @@ export class ApplicationResolver implements Resolve<any> {
   resolve(route: ActivatedRouteSnapshot): Observable<UserModel> {
     const payload = this.authService.decodeAccessToken();
     if (!payload || !payload.exp) return EMPTY;
-    console.log('In rsolver', route);
-    console.log('Payload', payload);
     return this.apiHttpService.getUserById(payload?.sub).pipe(
       take(1),
       filter(res => !!res),

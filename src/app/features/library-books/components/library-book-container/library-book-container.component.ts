@@ -3,6 +3,10 @@ import { Component } from '@angular/core';
 
 import { catchError, EMPTY, filter, finalize, take, tap } from 'rxjs';
 
+import { LanguageList } from '@constants/language-list.constant';
+import { BookCategoryList } from '@constants/book-category-list.constant';
+import { ToasterMessageConstants } from '@constants/toaster-message.constant';
+
 import { Select } from '@models/shared/select.model';
 import { LibraryBook } from '@models/entities/library-book.model';
 import { PagedResponse } from '@models/response/paged-response.model';
@@ -11,7 +15,6 @@ import { LibraryBookFilter } from '@models/payload/library-book-filter.model';
 
 import { HotToastService } from '@ngxpert/hot-toast';
 import { ApiHttpService } from '@shared/services/api-http.service';
-import { ToasterMessageConstants } from '@constants/toaster-message.constant';
 
 @Component({
   selector: 'app-library-book-container',
@@ -20,24 +23,9 @@ import { ToasterMessageConstants } from '@constants/toaster-message.constant';
 })
 export class LibraryBookContainerComponent {
   loading = false;
+  languageList: Select[] = LanguageList;
+  categoryList: Select[] = BookCategoryList;
 
-  languageList: Select[] = [
-    { Display: 'عربی', Value: 'Arabic' },
-    { Display: 'اردو', Value: 'Urdu' },
-    { Display: 'انگریزی', Value: 'English' },
-    { Display: 'فارسی', Value: 'Farsi' },
-  ];
-
-  categoryList: Select[] = [
-    { Display: 'تفسیر', Value: 'Tafseer' },
-    { Display: 'حدیث', Value: 'Hadees' },
-    { Display: 'سیرت', Value: 'Seerat' },
-    { Display: 'فقہ', Value: 'Fiqh' },
-    { Display: 'عقیدہ', Value: 'Aqeedah' },
-    { Display: 'اصول الفقہ', Value: 'Usool-ul-Fiqh' },
-    { Display: 'نحو و صرف', Value: 'Nahw-o-Sarf' },
-    { Display: 'دیگر', Value: 'Other' },
-  ];
   searchedQuery = String.Empty;
   selectedCategory = String.Empty;
   selectedLanguage = String.Empty;

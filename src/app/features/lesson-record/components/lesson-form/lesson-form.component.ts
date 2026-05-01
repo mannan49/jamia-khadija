@@ -20,7 +20,6 @@ import { ApiHttpService } from '@shared/services/api-http.service';
   selector: 'app-lesson-form',
   standalone: false,
   templateUrl: './lesson-form.component.html',
-  styleUrl: './lesson-form.component.css',
 })
 export class LessonFormComponent {
   loading = false;
@@ -37,11 +36,6 @@ export class LessonFormComponent {
     { Value: 'Sabqi', Display: 'سبقی' },
     { Value: 'Manzil', Display: 'منزل' },
   ];
-
-  parasList: Select[] = Array.from({ length: 30 }, (_, i) => ({
-    Value: i + 1,
-    Display: `پارہ ${i + 1}`,
-  }));
 
   constructor(
     private router: Router,
@@ -75,7 +69,7 @@ export class LessonFormComponent {
   buildLessonEntry(): FormGroup {
     return this.formBuilder.group({
       type: [String.Empty, Validators.required],
-      paraNumber: [null, Validators.required],
+      paraNumber: [String.Empty, Validators.required],
       listener: [String.Empty],
       mistakes: [0, [Validators.required, Validators.min(0)]],
       description: [String.Empty],

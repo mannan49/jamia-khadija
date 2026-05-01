@@ -5,6 +5,10 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { environment } from 'src/environments/environment';
 import { catchError, EMPTY, filter, finalize, take, tap } from 'rxjs';
 
+import { LanguageList } from '@constants/language-list.constant';
+import { BookCategoryList } from '@constants/book-category-list.constant';
+import { ToasterMessageConstants } from '@constants/toaster-message.constant';
+
 import { Select } from '@models/shared/select.model';
 import { Attachment } from '@models/shared/attachment.model';
 import { LibraryBook } from '@models/entities/library-book.model';
@@ -14,7 +18,6 @@ import { LibraryBookFilter } from '@models/payload/library-book-filter.model';
 
 import { HotToastService } from '@ngxpert/hot-toast';
 import { ApiHttpService } from '@shared/services/api-http.service';
-import { ToasterMessageConstants } from '@constants/toaster-message.constant';
 
 @Component({
   selector: 'app-library-book-form',
@@ -30,28 +33,12 @@ export class LibraryBookFormComponent {
   existingBookId = String.Empty;
   cloudFrontUrl = environment.cloudFrontUrl;
 
-  coverImage: Attachment = null;
   file: Attachment = null;
-  existingCoverImageUrl = String.Empty;
+  coverImage: Attachment = null;
   existingFileUrl = String.Empty;
-
-  categoryList: Select[] = [
-    { Value: 'Tafseer', Display: 'تفسیر' },
-    { Value: 'Hadees', Display: 'حدیث' },
-    { Value: 'Seerat', Display: 'سیرت' },
-    { Value: 'Fiqh', Display: 'فقہ' },
-    { Value: 'Aqeedah', Display: 'عقیدہ' },
-    { Value: 'Usool-ul-Fiqh', Display: 'اصول الفقہ' },
-    { Value: 'Nahw-o-Sarf', Display: 'نحو و صرف' },
-    { Value: 'Other', Display: 'دیگر' },
-  ];
-
-  languageList: Select[] = [
-    { Value: 'Arabic', Display: 'عربی' },
-    { Value: 'Urdu', Display: 'اردو' },
-    { Value: 'English', Display: 'انگریزی' },
-    { Value: 'Farsi', Display: 'فارسی' },
-  ];
+  existingCoverImageUrl = String.Empty;
+  languageList: Select[] = LanguageList;
+  categoryList: Select[] = BookCategoryList;
 
   constructor(
     private router: Router,
@@ -224,7 +211,9 @@ export class LibraryBookFormComponent {
     this.file = null;
     this.existingCoverImageUrl = String.Empty;
     this.existingFileUrl = String.Empty;
-    this.resetMediaState = true;
-    setTimeout(() => (this.resetMediaState = false));
+    this.resetMediaState = false;
+    setTimeout(() => {
+      this.resetMediaState = true;
+    });
   }
 }
