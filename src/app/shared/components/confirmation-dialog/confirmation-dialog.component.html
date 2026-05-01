@@ -1,0 +1,13 @@
+<div class="bg-main shadow-xl p-6">
+    <div class="grid grid-cols-12">
+        <span class="col-span-2 icon-verified-user text-secondary text-5xl"></span>
+        <div class="col-span-10">
+            <h3 class="text-2xl font-bold">{{ data?.title}}</h3>
+            <p>{{data?.message}}</p>
+        </div>
+    </div>
+    <div class="flex mt-4 gap-3 justify-end">
+        <app-button [label]="data?.cancelText" className="bg-gray-500" (click)="dialogRef.close(false)" />
+        <app-button [label]="data?.confirmText" [className]="data?.confirmButtonClass" (click)="dialogRef.close(true)" />
+    </div>
+</div>

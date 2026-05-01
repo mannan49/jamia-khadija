@@ -1,0 +1,48 @@
+<!-- Header Row -->
+<div class="hidden rounded-t-2xl md:grid grid-cols-14 bg-gray-200 font-bold text-gray-700 uppercase py-4 px-2">
+  <div class="col-span-3 pl-4">کتاب</div>
+  <div class="col-span-2">لینے والا</div>
+  <div class="col-span-2 text-center">اجرا تاریخ</div>
+  <div class="col-span-2 text-center">واپسی تاریخ</div>
+  <div class="col-span-2 text-center">جاری کرنے والے</div>
+  <div class="col-span-1 text-center">حالت</div>
+  <div class="col-span-2 text-center">اقدامات</div>
+</div>
+
+@for(record of pagedLibraryRecords?.Items; track $index) {
+  <div class="grid grid-cols-14 items-center border-b bg-main border-gray-200 py-4 px-2">
+
+    <!-- Book Title — always visible -->
+    <div class="col-span-12 md:col-span-3 truncate pl-4 font-medium">{{ record?.LibraryBook?.Text }}</div>
+
+    <!-- Desktop-only columns -->
+    <div class="col-span-2 truncate hidden md:block">{{ record?.Borrower?.Text }}</div>
+    <div class="col-span-2 text-center hidden md:block">{{ formatDate(record?.BorrowDate) }}</div>
+    <div class="col-span-2 text-center hidden md:block">
+      {{ record?.ReturnDate ? formatDate(record?.ReturnDate) : '—' }}
+    </div>
+    <div class="col-span-2 text-center text-sm hidden md:block">{{ record?.IssuerName }}</div>
+    <div class="col-span-1 text-center hidden md:block">
+      <span
+        [class]="record?.IsBorrowed
+          ? 'bg-yellow-100 text-yellow-700 px-2 py-1 rounded-full text-xs font-medium'
+          : 'bg-green-100 text-green-700 px-2 py-1 rounded-full text-xs font-medium'"
+      >
+        {{ record?.IsBorrowed ? 'جاری' : 'واپس' }}
+      </span>
+    </div>
+
+    <!-- Actions — always visible -->
+    <div class="col-span-2 flex justify-center items-center gap-1">
+      <span
+        class="icon-edit-pencil text-primary cursor-pointer"
+        (click)="onEditButtonClick(record?.Id)"
+      ></span>
+      <span
+        class="text-xl icon-delete text-secondary cursor-pointer"
+        (click)="onDeleteButtonClick(record?.Id)"
+      ></span>
+    </div>
+
+  </div>
+}

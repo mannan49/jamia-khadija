@@ -1,0 +1,9 @@
+<form [formGroup]="forgotEmailForm" (ngSubmit)="onSubmitForm()">
+    <app-input controlName="email" label="Email" placeholder="Enter Your Email" />
+    <app-button label="Submit" type="submit" [loading]="loading" [disabled]="!forgotEmailForm.valid" [className]="'bg-primary w-full'" />
+    <div class="flex justify-center items-center gap-2 my-2">
+      <p class="italic">Remember Your Password, then</p>
+      <p class="font-medium italic underline cursor-pointer" routerLink="/auth/login">Login Page</p>
+    </div>
+</form>
+  

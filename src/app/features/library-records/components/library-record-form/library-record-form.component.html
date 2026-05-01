@@ -1,0 +1,130 @@
+<div class="bg-main p-6 m-4 rounded-2xl shadow-lg">
+
+  @if(recordLoading) {
+    <app-loader />
+  } @else {
+
+    @if(isEditMode) {
+      <h1 class="font-bold text-2xl text-center my-2">اجرا ریکارڈ ترمیم کریں</h1>
+    } @else {
+      <h1 class="font-bold text-2xl text-center my-2">نیا اجرا ریکارڈ درج کریں</h1>
+    }
+
+    <form [formGroup]="recordForm" (ngSubmit)="onSubmitForm()">
+
+      <!-- Row 1: Student + Book -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mt-2">
+
+        @if(studentsLoading) {
+          <div class="flex items-center justify-center h-12">
+            <app-loader />
+          </div>
+        } @else {
+          <app-select
+            label="طالبعلم"
+            placeholder="طالبعلم منتخب کریں"
+            controlName="borrowerRefId"
+            [options]="studentsList"
+            (selectionChanged)="onStudentChange($event)"
+          />
+        }
+
+        @if(booksLoading) {
+          <div class="flex items-center justify-center h-12">
+            <app-loader />
+          </div>
+        } @else {
+          <app-select
+            label="کتاب"
+            placeholder="کتاب منتخب کریں"
+            controlName="bookRefId"
+            [options]="booksList"
+            (selectionChanged)="onBookChange($event)"
+          />
+        }
+
+      </div>
+
+      <!-- Row 2: Borrow Date + Return Date -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mt-5">
+        <app-input
+          label="اجرا کی تاریخ"
+          controlName="borrowDate"
+          type="date"
+        />
+        <app-input
+          label="واپسی کی متوقع تاریخ"
+          controlName="returnDate"
+          type="date"
+        />
+      </div>
+
+      <!-- Row 3: Issuer Name + Condition -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mt-5">
+        <app-input
+          label="جاری کرنے والے کا نام"
+          placeholder="ذمہ دار کا نام درج کریں"
+          controlName="issuerName"
+        />
+        <app-select
+          label="کتاب کی موجودہ حالت"
+          placeholder="حالت منتخب کریں"
+          controlName="condition"
+          [options]="conditionList"
+        />
+      </div>
+
+      <!-- Row 4: Condition on Return + Remarks (edit mode only) -->
+      @if(isEditMode) {
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mt-5">
+          <app-select
+            label="واپسی پر حالت"
+            placeholder="واپسی پر حالت منتخب کریں"
+            controlName="conditionOnReturn"
+            [options]="conditionList"
+          />
+          <app-input
+            label="اضافی نوٹ"
+            placeholder="کوئی خاص بات درج کریں"
+            controlName="remarks"
+          />
+        </div>
+
+        <!-- Is Borrowed Toggle -->
+        <div class="mt-5 flex items-center gap-3">
+          <label class="font-medium text-sm">کتاب واپس ہو گئی؟</label>
+          <input
+            type="checkbox"
+            class="w-4 h-4 accent-primary"
+            [checked]="!recordForm.get('isBorrowed')?.value"
+            (change)="recordForm.patchValue({ isBorrowed: !$any($event.target).checked })"
+          />
+          <span class="text-sm text-gray-500">(چیک کریں اگر کتاب واپس ہو گئی)</span>
+        </div>
+      } @else {
+        <!-- Remarks only in add mode -->
+        <div class="mt-5">
+          <app-input
+            label="اضافی نوٹ"
+            placeholder="کوئی خاص بات درج کریں"
+            controlName="remarks"
+          />
+        </div>
+      }
+
+      <!-- Submit -->
+      <div class="mt-6">
+        <app-button
+          [label]="isEditMode ? 'تبدیلیاں محفوظ کریں' : 'ریکارڈ محفوظ کریں'"
+          [disabled]="recordForm.invalid"
+          type="submit"
+          [loading]="loading"
+          [className]="'bg-primary w-1/3 mx-auto'"
+        />
+      </div>
+
+    </form>
+
+  }
+
+</div>

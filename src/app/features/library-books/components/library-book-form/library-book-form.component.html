@@ -1,0 +1,115 @@
+<div class="bg-main p-6 m-4 rounded-2xl shadow-lg">
+
+  @if(bookLoading) {
+    <app-loader />
+  } @else {
+
+    @if(isEditMode) {
+      <h1 class="font-bold text-2xl text-center my-2">کتاب ترمیم کریں</h1>
+    } @else {
+      <h1 class="font-bold text-2xl text-center my-2">نئی کتاب شامل کریں</h1>
+    }
+
+    <form [formGroup]="bookForm" (ngSubmit)="onSubmitForm()">
+
+      <!-- Row 1: Title + Author -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mt-2">
+        <app-input
+          label="کتاب کا عنوان"
+          placeholder="کتاب کا عنوان درج کریں"
+          controlName="title"
+        />
+        <app-input
+          label="مصنف"
+          placeholder="مصنف کا نام درج کریں"
+          controlName="author"
+        />
+      </div>
+
+      <!-- Row 2: Category + Language -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mt-5">
+        <app-select
+          label="زمرہ"
+          placeholder="زمرہ منتخب کریں"
+          controlName="category"
+          [options]="categoryList"
+        />
+        <app-select
+          label="زبان"
+          placeholder="زبان منتخب کریں"
+          controlName="language"
+          [options]="languageList"
+        />
+      </div>
+
+      <!-- Row 3: Publisher + Published Year -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mt-5">
+        <app-input
+          label="ناشر"
+          placeholder="ناشر کا نام درج کریں"
+          controlName="publisher"
+        />
+        <app-input
+          label="اشاعت کا سال"
+          placeholder="مثلاً 2020"
+          controlName="publishedYear"
+        />
+      </div>
+
+      <!-- Row 4: Edition + Total Copies + Available Copies -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mt-5">
+        <app-input
+          label="ایڈیشن"
+          placeholder="مثلاً پہلا، دوسرا"
+          controlName="edition"
+        />
+        <app-input
+          label="کل نسخے"
+          type="number"
+          placeholder="کل نسخوں کی تعداد"
+          controlName="totalCopies"
+        />
+        <app-input
+          label="دستیاب نسخے"
+          type="number"
+          placeholder="دستیاب نسخوں کی تعداد"
+          controlName="availableCopies"
+        />
+      </div>
+
+      <!-- Row 5: Description -->
+      <div class="mt-5">
+        <app-input
+          label="تفصیل"
+          placeholder="کتاب کی مختصر تفصیل"
+          controlName="description"
+        />
+      </div>
+
+      <!-- Row 6: File Upload -->
+      <!-- <div class="mt-5">
+        <app-files-upload-container
+          [resetForm]="resetMediaState"
+          [existingCoverImageUrl]="existingCoverImageUrl"
+          [existingFileUrl]="existingFileUrl"
+          (coverImageUploaded)="handleCoverImageUploaded($event)"
+          (fileUploaded)="handleFileUploaded($event)"
+        />
+      </div> -->
+
+      <!-- Submit -->
+      <div class="mt-6">
+        <app-button
+          [label]="isEditMode ? 'تبدیلیاں محفوظ کریں' : 'کتاب شامل کریں'"
+          [disabled]="bookForm.invalid"
+          type="submit"
+          [loading]="loading"
+          [className]="'bg-primary w-1/3 mx-auto'"
+        />
+      </div>
+
+    </form>
+
+  }
+
+</div>

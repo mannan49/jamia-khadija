@@ -1,0 +1,67 @@
+<!-- Header Row -->
+<div class="hidden rounded-t-2xl md:grid grid-cols-14 bg-gray-200 font-bold text-gray-700 uppercase py-4 px-2">
+  <div class="col-span-1 pl-4">تصویر</div>
+  <div class="col-span-3">عنوان</div>
+  <div class="col-span-2">مصنف</div>
+  <div class="col-span-2 text-center">زمرہ</div>
+  <div class="col-span-1 text-center">زبان</div>
+  <div class="col-span-1 text-center">کل نسخے</div>
+  <div class="col-span-1 text-center">دستیاب</div>
+  <div class="col-span-1 text-center">فائل</div>
+  <div class="col-span-2 text-center">اقدامات</div>
+</div>
+
+@for(book of pagedLibraryBooks?.Items; track $index) {
+  <div class="grid grid-cols-14 items-center border-b bg-main border-gray-200 py-4 px-2">
+
+    <!-- Cover Image -->
+    <div class="col-span-12 md:col-span-1 pl-4">
+      @if(book?.CoverImage?.Url) {
+        <img
+          [src]="cloudFrontUrl + book?.CoverImage?.Url"
+          alt="cover"
+          class="h-12 w-10 object-cover rounded shadow-sm"
+        />
+      } @else {
+        <span class="icon-image text-gray-300 text-2xl"></span>
+      }
+    </div>
+
+    <!-- Title — always visible -->
+    <div class="col-span-12 md:col-span-3 truncate font-medium">{{ book?.Title }}</div>
+
+    <!-- Desktop-only columns -->
+    <div class="col-span-2 truncate hidden md:block">{{ book?.Author }}</div>
+    <div class="col-span-2 text-center hidden md:block">{{ book?.Category }}</div>
+    <div class="col-span-1 text-center hidden md:block">{{ book?.Language }}</div>
+    <div class="col-span-1 text-center hidden md:block">{{ book?.TotalCopies }}</div>
+    <div class="col-span-1 text-center hidden md:block">
+      <span [class]="book?.AvailableCopies > 0 ? 'text-green-600 font-semibold' : 'text-secondary font-semibold'">
+        {{ book?.AvailableCopies }}
+      </span>
+    </div>
+    <div class="col-span-1 text-center hidden md:block">
+      @if(book?.File?.Url) {
+        <span
+          class="icon-file-pdf text-primary cursor-pointer text-xl"
+          (click)="onFileClick(book?.File?.Url)"
+        ></span>
+      } @else {
+        <span class="text-gray-300">—</span>
+      }
+    </div>
+
+    <!-- Actions — always visible -->
+    <div class="col-span-2 flex justify-center items-center gap-1">
+      <span
+        class="icon-edit-pencil text-primary cursor-pointer"
+        (click)="onEditButtonClick(book?.Id)"
+      ></span>
+      <span
+        class="text-xl icon-delete text-secondary cursor-pointer"
+        (click)="onDeleteButtonClick(book?.Id)"
+      ></span>
+    </div>
+
+  </div>
+}

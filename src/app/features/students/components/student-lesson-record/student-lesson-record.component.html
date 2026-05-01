@@ -1,0 +1,174 @@
+<div class="mt-4 mx-auto px-4 sm:px-6 lg:px-8">
+  <!-- Row 1: Search bar -->
+  <app-search-bar (searchClicked)="handleSearchClick($event)" />
+
+  <!-- Row 2: Date range filter + custom pickers -->
+  <div class="mt-3 flex flex-wrap items-end gap-3">
+    <!-- Date range dropdown -->
+    <app-dropdown
+      placeholder="تاریخ کی حد منتخب کریں"
+      [options]="dateRangeList"
+      (selectionChanged)="onDateRangeChange($event)"
+    />
+
+    <!-- Custom date pickers — only shown when "مخصوص تاریخ" selected -->
+    @if (showCustomDates) {
+      <div class="flex items-end gap-2">
+        <div class="flex flex-col gap-1">
+          <label class="text-xs text-gray-500 text-right">شروع تاریخ</label>
+          <input
+            type="date"
+            class="border border-gray-300 rounded-lg px-3 py-2 text-sm bg-main focus:outline-none focus:border-primary"
+            [(ngModel)]="customDateFrom"
+            (change)="onCustomDateChange()"
+          />
+        </div>
+        <div class="flex flex-col gap-1">
+          <label class="text-xs text-gray-500 text-right">آخری تاریخ</label>
+          <input
+            type="date"
+            class="border border-gray-300 rounded-lg px-3 py-2 text-sm bg-main focus:outline-none focus:border-primary"
+            [(ngModel)]="customDateTo"
+            (change)="onCustomDateChange()"
+          />
+        </div>
+      </div>
+    }
+  </div>
+</div>
+
+<div class="container mx-auto px-2 sm:px-6 lg:px-8 py-4">
+  <!-- Heading + New Record + Download buttons -->
+  <div class="grid grid-cols-12 mb-4 items-center">
+    <h2 class="text-xl md:text-2xl col-span-12 md:col-span-8 font-bold text-center mb-3 md:mb-0">
+      {{ studentName ? studentName + ' کا سبق ریکارڈ' : 'سبق ریکارڈ' }}
+    </h2>
+    <div class="col-span-12 md:col-span-4 flex gap-2 justify-end">
+      <app-button
+        label="ریکارڈ ڈاؤنلوڈ"
+        (click)="downloadRecord()"
+        [loading]="downloading"
+        [className]="'bg-stroke'"
+        iconClass="icon-download text-white"
+      />
+      <app-button
+        label="نیا ریکارڈ"
+        (click)="onAddNewButtonClick()"
+        [className]="'bg-primary'"
+        iconClass="icon-add text-white"
+      />
+    </div>
+  </div>
+
+  @if (loading) {
+    <app-loader />
+  } @else {
+    @if (pagedLessonRecords?.Items?.length > 0) {
+      <!-- Header Row -->
+      <div
+        class="hidden rounded-t-2xl md:grid grid-cols-14 bg-gray-200 font-bold text-gray-700 uppercase py-4 px-2"
+      >
+        <div class="col-span-2 pl-4">تاریخ</div>
+        <div class="col-span-3 text-center">سبق</div>
+        <div class="col-span-3 text-center">سبقی</div>
+        <div class="col-span-3 text-center">منزل</div>
+        <div class="col-span-1 text-center">کل غلطیاں</div>
+        <div class="col-span-2 text-center">اقدامات</div>
+      </div>
+
+      @for (record of pagedLessonRecords?.Items; track $index) {
+        <div class="grid grid-cols-14 items-start border-b bg-main border-gray-200 py-4 px-2">
+          <!-- Date — always visible -->
+          <div class="col-span-12 md:col-span-2 pl-4 font-medium pt-1">
+            {{ formatDate(record?.Date) }}
+          </div>
+
+          <!-- Sabaq -->
+          <div class="col-span-3 hidden md:flex flex-col gap-1 items-center">
+            @if (getLessonByType(record, 'Sabaq'); as sabaq) {
+              <span class="bg-blue-100 text-blue-700 text-xs px-2 py-0.5 rounded-full">
+                پارہ {{ sabaq?.ParaNumber }}
+              </span>
+              <span class="text-xs text-gray-500">غلطیاں: {{ sabaq?.Mistakes }}</span>
+            } @else {
+              <span class="text-gray-300">—</span>
+            }
+          </div>
+
+          <!-- Sabqi -->
+          <div class="col-span-3 hidden md:flex flex-col gap-1 items-center">
+            @if (getLessonByType(record, 'Sabqi'); as sabqi) {
+              <span class="bg-green-100 text-green-700 text-xs px-2 py-0.5 rounded-full">
+                پارہ {{ sabqi?.ParaNumber }}
+              </span>
+              <span class="text-xs text-gray-500">غلطیاں: {{ sabqi?.Mistakes }}</span>
+            } @else {
+              <span class="text-gray-300">—</span>
+            }
+          </div>
+
+          <!-- Manzil -->
+          <div class="col-span-3 hidden md:flex flex-col gap-1 items-center">
+            @if (getLessonByType(record, 'Manzil'); as manzil) {
+              <span class="bg-purple-100 text-purple-700 text-xs px-2 py-0.5 rounded-full">
+                پارہ {{ manzil?.ParaNumber }}
+              </span>
+              <span class="text-xs text-gray-500">غلطیاں: {{ manzil?.Mistakes }}</span>
+            } @else {
+              <span class="text-gray-300">—</span>
+            }
+          </div>
+
+          <!-- Total Mistakes -->
+          <div class="col-span-1 text-center hidden md:flex items-center justify-center pt-1">
+            <span
+              [class]="
+                getTotalMistakes(record) === 0
+                  ? 'text-green-600 font-bold'
+                  : getTotalMistakes(record) <= 3
+                    ? 'text-yellow-600 font-bold'
+                    : 'text-secondary font-bold'
+              "
+            >
+              {{ getTotalMistakes(record) }}
+            </span>
+          </div>
+
+          <!-- Actions -->
+          <div class="col-span-2 flex justify-center items-center gap-1 pt-1">
+            <span
+              class="icon-edit-pencil text-primary cursor-pointer"
+              (click)="onEditButtonClick(record?.Id)"
+            ></span>
+            <span
+              class="text-xl icon-delete text-secondary cursor-pointer"
+              (click)="handleDeleteButtonClick(record?.Id)"
+            ></span>
+          </div>
+        </div>
+      }
+    } @else {
+      <div
+        class="flex bg-main py-10 rounded-2xl flex-col justify-center items-center gap-2 my-auto mt-10"
+      >
+        <span class="icon-clear text-5xl"></span>
+        <h2 class="text-2xl">کوئی سبق ریکارڈ نہیں ملا۔</h2>
+      </div>
+    }
+
+    @if (pagedLessonRecords?.TotalCount > pagedLessonRecords?.PageSize) {
+      <div class="grid grid-cols-12 items-center py-4">
+        <div class="col-span-12 md:col-span-4 text-center md:text-left">
+          {{ pagedLessonRecords?.Items?.length * pagedLessonRecords?.PageIndex }} میں سے
+          {{ pagedLessonRecords?.TotalCount }} دکھائے جا رہے ہیں
+        </div>
+        <div class="col-span-12 md:col-span-8">
+          <app-pagination-actions
+            [pagedResponse]="pagedLessonRecords"
+            (pageChanged)="handlePageChange($event)"
+          />
+        </div>
+      </div>
+    }
+  }
+</div>

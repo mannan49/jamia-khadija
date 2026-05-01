@@ -1,0 +1,33 @@
+<div class="flex flex-col justify-center items-center">
+    <div class="my-2">Enter the 6-digit verification code sent to your email.</div>
+    <form (ngSubmit)="onSubmitOtp()" [formGroup]="forgotOtpForm">
+      <div class="flex justify-center gap-2 px-4 my-2">
+        @for(control of otpControls; track $index){
+        <input
+          [formControlName]="control"
+          maxlength="1"
+          appOnlyNumberInput
+          class="text-center text-2xl font-extrabold text-slate-900 bg-slate-100 border border-transparent hover:border-slate-200 appearance-none rounded p-2 outline-none focus:bg-white focus:border-primary focus:ring-2 focus:ring-indigo-100"
+        />
+        }
+      </div>
+      <div class="flex justify-center items-center my-2">
+        <p class="text-tertiary">Resend available in {{ resendTimer }} seconds,</p>
+        <p
+          class="text-tertiary ml-1 italic underline cursor-pointer"
+          [class.opacity-50]="resendTimer > 0"
+          [class.cursor-not-allowed]="resendTimer > 0"
+          [class.cursor-pointer]="resendTimer === 0"
+          (click)="onResendOtpClick()"
+        >
+          Resend OTP
+        </p>
+      </div>
+      <app-button label="Verify OTP" type="submit" [disabled]="!forgotOtpForm.valid" [loading]="loading" [className]="'bg-primary w-full'" />
+      <div class="div flex justify-center items-center mt-2">
+        <p>I alreay have an account,</p>
+        <p routerLink="/auth/login" class="italic underline font-semibold ml-1 cursor-pointer">Login Page</p>
+      </div>
+    </form>
+  </div>
+  

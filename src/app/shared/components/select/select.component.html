@@ -1,0 +1,22 @@
+<div class="my-2 flex flex-col">
+  @if (label) {
+  <label for="{{ controlName }}" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ label }}:</label>
+  }
+
+  <select
+    [formControl]="control"
+    [ngClass]="{ 'border-red-600': inputValidator.showErrors }"
+    form_control
+    #inputValidator="appValidate"
+    class="bg-gray-50 border border-gray-300 text-black text-sm rounded-lg block w-full p-2.5 dark:placeholder-gray-400"
+  >
+    <option class="text-black" value="" selected>{{ placeholder }}</option>
+    @for (option of options; track option[valueField]) {
+    <option class="text-black" [value]="option[valueField]">
+      {{ option[displayField] }}
+    </option>
+    }
+  </select>
+
+  <app-error-message class="ml-1" [show]="inputValidator.showErrors" [errorKey]="inputValidator.firstErrorKey"></app-error-message>
+</div>

@@ -1,0 +1,62 @@
+<div class="mt-4 mx-auto px-4 sm:px-6 lg:px-8">
+  <app-search-bar (searchClicked)="handleSearchClick($event)" />
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mt-3">
+    <app-dropdown
+      placeholder="زمرہ منتخب کریں"
+      [options]="categoryList"
+      (selectionChanged)="handleCategorySelectionChange($event)"
+    />
+    <app-dropdown
+      placeholder="زبان منتخب کریں"
+      [options]="languageList"
+      (selectionChanged)="handleLanguageSelectionChange($event)"
+    />
+  </div>
+</div>
+
+<div class="container mx-auto px-2 sm:px-6 lg:px-8 py-4">
+  <div class="grid grid-cols-12">
+    <h2 class="text-xl md:text-2xl col-span-5 md:col-span-10 font-bold text-center mb-4">
+      لائبریری کتابیں
+    </h2>
+    <div class="col-span-7 md:col-span-2">
+      <app-button
+        label="نئی کتاب"
+        (click)="onAddNewButtonClick()"
+        [className]="'bg-primary w-full'"
+        iconClass="icon-add text-white"
+      />
+    </div>
+  </div>
+
+  @if(loading) {
+    <app-loader />
+  } @else {
+    @if(pagedLibraryBooks?.Items?.length > 0) {
+      <app-library-book-table
+        [pagedLibraryBooks]="pagedLibraryBooks"
+        (deleteButtonClicked)="handleDeleteButtonClick($event)"
+      />
+    } @else {
+      <div class="flex bg-main py-10 rounded-2xl flex-col justify-center items-center gap-2 my-auto mt-10">
+        <span class="icon-clear text-5xl"></span>
+        <h2 class="text-2xl">کوئی کتاب نہیں ملی۔</h2>
+      </div>
+    }
+
+    @if(pagedLibraryBooks?.TotalCount > pagedLibraryBooks?.PageSize) {
+      <div class="grid grid-cols-12 items-center py-4">
+        <div class="col-span-12 md:col-span-4 text-center md:text-left">
+          {{ pagedLibraryBooks?.Items?.length * pagedLibraryBooks?.PageIndex }} میں سے {{ pagedLibraryBooks?.TotalCount }} دکھائے جا رہے ہیں
+        </div>
+        <div class="col-span-12 md:col-span-8">
+          <app-pagination-actions
+            [pagedResponse]="pagedLibraryBooks"
+            (pageChanged)="handlePageChange($event)"
+          />
+        </div>
+      </div>
+    }
+  }
+</div>

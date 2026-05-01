@@ -1,0 +1,61 @@
+<!-- This is header in case of mobile -->
+<div class="h-full md:hidden">
+  <div class="flex justify-between items-center px-4 h-full">
+    <div class="flex justify-start items-center gap-2 lg:mx-12">
+      <a class="flex justify-center gap-1 text-lg" routerLink="/">
+        <mat-icon class="material-icons-outlined">home</mat-icon>
+        دریچہ
+      </a>
+    </div>
+    <button (click)="toggleMenu()">
+      <mat-icon class="material-icons-outlined">menu</mat-icon>
+    </button>
+  </div>
+</div>
+
+<!-- This is Side-bar in case of mobile -->
+
+@if(isMenuOpen){
+<div class="fixed h-full top-0 right-0 z-50" (click)="toggleMenu()">
+  <div class="bg-primary text-white w-1/2 h-full right-0 fixed shadow-lg py-6 px-4 slide-in" (click)="$event.stopPropagation()">
+    <button (click)="toggleMenu()" class="absolute top-4 right-4">
+      <mat-icon class="material-icons-outlined">close</mat-icon>
+    </button>
+    <div class="flex flex-col items-start space-y-4 mt-12">
+      @for(item of menuItems; track $index){
+      <div class="w-full flex items-center gap-2" routerLinkActive="bg-main px-2 md:px-0 md:mx-2 py-1 rounded-xl text-primary" [routerLinkActiveOptions]="{ exact: item?.exact}">
+        <a class="flex justify-center items-center gap-2" [routerLink]="item.route" (click)="item.label === 'Logout' ? logout($event) : null">
+          <span [class]="'text-2xl ' + item.icon"></span>
+          {{ item.label }}
+        </a>
+      </div>
+      }
+    </div>
+  </div>
+</div>
+}
+
+<!-- This is Side-bar in case of desktop -->
+
+
+<div class="hidden md:block">
+  <div class="flex flex-col gap-6 items-center justify-start py-10">
+    <div class="w-9/10 px-6 flex justify-start items-center gap-2 lg:mx-12"
+     routerLinkActive="bg-main mx-2 py-1 rounded-xl text-primary" [routerLinkActiveOptions]="{ exact: true }">
+      <a class="flex justify-center items-center gap-2" routerLink="/"
+        >
+        <mat-icon class="material-icons-outlined">home</mat-icon>
+        دریچہ     
+      </a>
+    </div>
+    @for(item of menuItems; track $index){
+      <div class="w-9/10 px-6 flex justify-start items-center gap-2 lg:mx-12"
+        routerLinkActive="bg-main mx-2 py-1 rounded-xl text-primary" [routerLinkActiveOptions]="{ exact: item?.exact}">
+        <a class="flex justify-center items-center gap-2" [routerLink]="item.route" (click)="item.label === 'لاگ آؤٹ' ? logout($event) : null">
+          <span [class]="'text-2xl ' + item.icon"></span>
+          {{ item.label }}
+        </a>
+      </div>
+      }
+  </div>
+</div>

@@ -1,0 +1,15 @@
+<div class="my-2 flex flex-col">
+  @if(label){
+  <label for="{{ controlName }}" [ngClass]="[labelStyles]">{{ label }}:</label>
+  }
+  <input
+    [formControl]="control"
+    [placeholder]="placeholder"
+    form_control
+    [type]="type"
+    #inputValidator="appValidate"
+    [ngClass]="{ 'border-red-600': inputValidator.showErrors }"
+    [ngClass]="[inputStyles]"
+  />
+  <app-error-message class="ml-1" [show]="inputValidator.showErrors" [errorKey]="inputValidator.firstErrorKey"></app-error-message>
+</div>

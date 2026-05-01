@@ -1,0 +1,55 @@
+<div class="mt-4 mx-auto px-4 sm:px-6 lg:px-8">
+  <app-search-bar (searchClicked)="handleSearchClick($event)" />
+
+  <!-- <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mt-3">
+    <app-dropdown placeholder="جماعت منتخب کریں" [options]="classesList" (selectionChanged)="handleClassSelectionChange($event)" />
+    <app-dropdown placeholder="صنف منتخب کریں" [options]="genderList" (selectionChanged)="handleGenderSelectionChange($event)" />
+    <app-dropdown placeholder="شعبہ منتخب کریں" [options]="departmentsList" (selectionChanged)="handleDepartmentSelectionChange($event)" />
+  </div> -->
+</div>
+
+<div class="container mx-auto px-2 sm:px-6 lg:px-8 py-4">
+  <div class="grid grid-cols-12">
+    <h2 class="text-xl md:text-2xl col-span-5 md:col-span-10 font-bold text-center mb-4">
+      طلبہ کی فہرست
+    </h2>
+    <div class="col-span-7 md:col-span-2">
+      <app-button
+        label="نیا طالبعلم"
+        (click)="onAddNewButtonClick()"
+        [className]="'bg-primary w-full'"
+        iconClass="icon-add text-white"
+      />
+    </div>
+  </div>
+
+  @if(loading) {
+    <app-loader />
+  } @else {
+    @if(pagedStudents?.Items?.length > 0) {
+      <app-students-table
+        [pagedStudents]="pagedStudents"
+        (deleteButtonClicked)="handleDeleteButtonClick($event)"
+      />
+    } @else {
+      <div class="flex bg-main py-10 rounded-2xl flex-col justify-center items-center gap-2 my-auto mt-10">
+        <span class="icon-clear text-5xl"></span>
+        <h2 class="text-2xl">کوئی طالبعلم نہیں ملا۔</h2>
+      </div>
+    }
+
+    @if(pagedStudents?.TotalCount > pagedStudents?.PageSize) {
+      <div class="grid grid-cols-12 items-center py-4">
+        <div class="col-span-12 md:col-span-4 text-center md:text-left">
+          {{ pagedStudents?.Items?.length * pagedStudents?.PageIndex }} میں سے {{ pagedStudents?.TotalCount }} دکھائے جا رہے ہیں
+        </div>
+        <div class="col-span-12 md:col-span-8">
+          <app-pagination-actions
+            [pagedResponse]="pagedStudents"
+            (pageChanged)="handlePageChange($event)"
+          />
+        </div>
+      </div>
+    }
+  }
+</div>

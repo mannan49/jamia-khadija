@@ -1,0 +1,17 @@
+<form [formGroup]="loginForm" (ngSubmit)="onSubmitForm()" class="flex flex-col gap-4">
+  <div class="flex flex-col gap-1">
+    <label class="text-sm font-medium">ای میل</label>
+    <app-input controlName="email" placeholder="آپ کا ای میل درج کریں" />
+  </div>
+  <div class="flex flex-col gap-1">
+    <label class="text-sm font-medium">پاس ورڈ</label>
+    <app-input controlName="password" type="password" placeholder="پاس ورڈ درج کریں" />
+  </div>
+  <app-button
+    label="لاگ ان"
+    type="submit"
+    [loading]="loading"
+    [disabled]="!loginForm.valid"
+    [className]="'bg-primary w-full mt-2'"
+  />
+</form>

@@ -1,0 +1,18 @@
+<div [ngClass]="['flex flex-col', className]">
+  @if (label) {
+  <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ label }}:</label>
+  }
+
+  <select (change)="onSelect($event)" class="bg-gray-50 border border-gray-300 text-black text-sm rounded-lg block w-full p-2.5 dark:placeholder-gray-400">
+    @if(doNotShowFirstOption){
+        <option value="" selected hidden>{{ placeholder }}</option>
+    } @else {
+        <option value="" selected>{{ placeholder }}</option>
+    }
+    @for (option of options; track option[valueField]) {
+        <option class="text-black" [value]="option[valueField]">
+        {{ option[displayField] }}
+        </option>
+    }
+  </select>
+</div>

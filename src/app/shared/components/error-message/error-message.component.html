@@ -1,0 +1,9 @@
+<div *ngIf="show && errorKey" class="text-sm text-red-600 mt-1" dir="rtl">
+  <div *ngIf="errorKey === 'required'">*یہ فیلڈ لازمی ہے</div>
+  <div *ngIf="errorKey === 'invalidEmail'">*ای میل درست نہیں ہے</div>
+  <div *ngIf="errorKey === 'specialCharEmail'"> *صرف (.) اور &#64; بطور خاص حروف کی اجازت ہے</div>
+  <div *ngIf="errorKey === 'minLength'">*پاس ورڈ کم از کم 8 حروف پر مشتمل ہونا چاہیے</div>
+  <div *ngIf="errorKey === 'alphanumeric'">*پاس ورڈ میں حروف اور اعداد شامل ہونے چاہئیں</div>
+  <div *ngIf="errorKey === 'specialChar'">*پاس ورڈ میں کم از کم ایک خاص حرف شامل ہونا چاہیے</div>
+  <div *ngIf="errorKey === 'confirmPasswordMismatch'">*پاس ورڈ اور تصدیقی پاس ورڈ ایک جیسے ہونے چاہئیں</div>
+</div>

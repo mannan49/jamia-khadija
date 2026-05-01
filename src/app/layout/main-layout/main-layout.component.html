@@ -1,0 +1,9 @@
+<div class="grid grid-cols-1 md:grid-cols-12 h-screen overflow-hidden">
+  <app-header class="h-16 md:col-span-2 md:h-screen bg-primary text-white" />
+  <div class="col-span-10 md:h-screen overflow-y-auto">
+    <div class="px-2">
+      <router-outlet />
+    </div>
+    <app-footer class="md:hidden" />
+  </div>
+</div>

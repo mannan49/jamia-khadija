@@ -1,0 +1,42 @@
+<!-- Header Row — hidden on mobile, same grid pattern as chapters-table -->
+<div class="hidden rounded-t-2xl md:grid grid-cols-14 bg-gray-200 font-bold text-gray-700 uppercase py-4 px-2">
+  <div class="col-span-3 pl-4">نام</div>
+  <div class="col-span-2">والد کا نام</div>
+  <div class="col-span-1 text-center">داخلہ نمبر</div>
+  <div class="col-span-2 text-center">تاریخِ داخلہ</div>
+  <div class="col-span-2 text-center">شعبہ</div>
+  <div class="col-span-2 text-center">رابطہ نمبر</div>
+  <div class="col-span-2 text-center">اقدامات</div>
+</div>
+
+@for(student of pagedStudents?.Items; track $index) {
+  <div class="grid grid-cols-14 items-center border-b bg-main border-gray-200 py-4 px-2">
+    <!-- Name — always visible -->
+    <div class="col-span-12 md:col-span-3 truncate pl-4 font-medium">{{ student?.Name }}</div>
+
+    <!-- Desktop-only columns -->
+    <div class="col-span-2 truncate hidden md:block">{{ student?.FatherName }}</div>
+    <div class="col-span-1 text-center hidden md:block">
+      {{ student?.RegistrationNumber }}
+    </div>
+    <div class="col-span-2 text-center hidden md:block">{{ student?.EnrollmentDate | date }}</div>
+    <div class="col-span-2 text-center text-sm hidden md:block">{{ student?.Department }}</div>
+    <div class="col-span-2 text-center text-sm hidden md:block">{{ student?.Phone }}</div>
+
+    <!-- Actions — always visible -->
+    <div class="col-span-2 flex justify-center items-center gap-1">
+      <span
+        class="icon-edit-pencil text-primary cursor-pointer"
+        (click)="onEditButtonClick(student?.Id)"
+      ></span>
+      <span
+        class="text-xl icon-delete text-secondary cursor-pointer"
+        (click)="onDeleteButtonClick(student?.Id)"
+      ></span>
+      <span
+        class="text-xl icon-arrow-left cursor-pointer"
+        (click)="onDetailButtonClick(student?.Id)"
+      ></span>
+    </div>
+  </div>
+}

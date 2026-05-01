@@ -1,0 +1,132 @@
+<div class="bg-main p-6 m-4 rounded-2xl shadow-lg">
+
+  @if(recordLoading) {
+    <app-loader />
+  } @else {
+
+    @if(isEditMode) {
+      <h1 class="font-bold text-2xl text-center my-2">سبق ریکارڈ ترمیم کریں</h1>
+    } @else {
+      <h1 class="font-bold text-2xl text-center my-2">سبق ریکارڈ درج کریں</h1>
+    }
+
+    <form [formGroup]="lessonForm" (ngSubmit)="onSubmitForm()">
+
+      <!-- Row 1: Student + Date -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mt-2">
+
+        <!-- Student Select — fetched from API -->
+        @if(studentsLoading) {
+          <div class="flex items-center justify-center h-12">
+            <app-loader />
+          </div>
+        } @else {
+          <app-select
+            label="طالبعلم"
+            placeholder="طالبعلم منتخب کریں"
+            controlName="studentId"
+            [options]="studentsList"
+            (selectionChanged)="onStudentChange($event)"
+          />
+        }
+
+        <app-input
+          label="تاریخ"
+          controlName="date"
+          type="date"
+        />
+
+      </div>
+
+      <!-- Lessons FormArray -->
+      <div formArrayName="lessons">
+
+        @for(lesson of lessonsArray.controls; track $index; let i = $index) {
+          <div [formGroupName]="i"
+               class="border border-gray-200 rounded-2xl p-4 mt-5 relative">
+
+            <!-- Entry header -->
+            <div class="flex items-center justify-between mb-3">
+              <button
+                type="button"
+                (click)="removeLessonEntry(i)"
+                [disabled]="lessonsArray.length === 1"
+                class="text-secondary disabled:opacity-30 disabled:cursor-not-allowed"
+              >
+                <span class="icon-delete text-xl"></span>
+              </button>
+              <h3 class="font-semibold text-base">سبق {{ i + 1 }}</h3>
+            </div>
+
+            <!-- Row: Type + Para Number -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+              <app-select
+                label="سبق کی قسم"
+                placeholder="قسم منتخب کریں"
+                controlName="type"
+                [options]="lessonTypesList"
+              />
+              <app-select
+                label="پارہ نمبر"
+                placeholder="پارہ منتخب کریں"
+                controlName="paraNumber"
+                [options]="parasList"
+              />
+            </div>
+
+            <!-- Row: Listener + Mistakes -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mt-5">
+              <app-input
+                label="سامع"
+                placeholder="سامع کا نام درج کریں"
+                controlName="listener"
+              />
+              <app-input
+                label="غلطیاں"
+                placeholder="غلطیوں کی تعداد"
+                controlName="mistakes"
+                type="number"
+              />
+            </div>
+
+            <!-- Row: Description -->
+            <div class="mt-5">
+              <app-input
+                label="تفصیل / نوٹ"
+                placeholder="اضافی تفصیل درج کریں"
+                controlName="description"
+              />
+            </div>
+
+          </div>
+        }
+
+      </div>
+
+      <!-- Add Lesson Entry Button -->
+      <div class="mt-4 flex justify-end">
+        <app-button
+          type="button"
+          label="مزید سبق شامل کریں"
+          (click)="addLessonEntry()"
+          [className]="'bg-stroke py-1.5'"
+          iconClass="icon-add text-white"
+        />
+      </div>
+
+      <!-- Submit -->
+      <div class="mt-5">
+        <app-button
+          label="محفوظ کریں"
+          [disabled]="lessonForm.invalid"
+          type="submit"
+          [loading]="loading"
+          [className]="'bg-primary w-1/3 mx-auto'"
+        />
+      </div>
+
+    </form>
+
+  }
+
+</div>

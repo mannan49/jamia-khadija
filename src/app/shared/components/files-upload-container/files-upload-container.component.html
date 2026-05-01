@@ -1,0 +1,89 @@
+<div class="w-full flex flex-col bg-white border border-gray-200 shadow-2xs rounded-xl">
+  <div class="p-2 md:p-5 space-y-2">
+    <div>
+      <!-- Uploading File Content -->
+      <div class="mb-2 flex justify-between items-center">
+        <div class="flex items-center gap-x-3">
+          <input type="file" #coverImageInput hidden (change)="onFileSelected($event, 'coverImage')" />
+          @if(coverImagePreview){
+          <div class="flex items-center justify-end gap-1">
+            <img [src]="coverImagePreview" class="w-10 h-10 object-cover rounded cursor-pointer" (click)="triggerFileInput(coverImageInput)" />
+          </div>
+          } @else {
+          <app-icon-upload-svg (click)="triggerFileInput(coverImageInput)" />
+          }
+          <div>
+            <div class="text-sm font-medium text-gray-800">
+              <div class="hidden md:block">
+                @if(imageAttachment?.Title){
+                  {{ imageAttachment.Title }}
+                }
+              </div>
+              <div class="text-xs sm:text-base">
+                @if(!imageAttachment.Title){
+                  Upload Cover Image
+                }
+              </div>
+            </div>
+            @if(imageAttachment?.Size){
+            <p class="text-xs text-gray-500">{{ (imageAttachment?.Size / 1024 / 1024) | number: '1.2-2' }} MB</p>
+            }
+          </div>
+        </div>
+        <div class="inline-flex items-center gap-x-2">
+          @if(isImageUploadingCompleted){
+          <app-icon-done-svg />
+          <app-icon-delete-svg (click)="removeUploadedFile('coverImage')" />
+          }
+        </div>
+      </div>
+      <!-- End Uploading File Content -->
+
+      @if(imageUploadPercentage > 0 && imageUploadPercentage < 100) {
+      <app-progress-bar [width]="imageUploadPercentage" />
+      }
+    </div>
+    <div>
+      <!-- Uploading File Content -->
+      <div class="mb-2 flex justify-between items-center">
+        <div class="flex items-center gap-x-3">
+          <input type="file" #pdfInput hidden (change)="onFileSelected($event, 'pdf')" />
+          @if(filePreview){
+          <div class="flex items-center gap-1 cursor-pointer" (click)="triggerFileInput(pdfInput)">
+            <span class="icon-file-pdf ml-2 text-4xl text-primary"></span>
+          </div>
+          } @else {
+          <app-icon-upload-svg (click)="triggerFileInput(pdfInput)" />
+          }
+          <div>
+            <div class="text-sm font-medium text-gray-800">
+              <div class="hidden md:block">
+                @if(fileAttachment?.Title){
+                  {{ fileAttachment?.Title }}
+                }
+              </div>
+              <div class="text-xs sm:text-base">
+                @if(!fileAttachment?.Title){
+                  Upload File
+                }
+              </div>
+            </div>
+            @if(fileAttachment?.Size){
+            <p class="text-xs text-gray-500 dark:text-neutral-500">{{ (fileAttachment?.Size / 1024 / 1024) | number: '1.2-2' }} MB</p>
+            }
+          </div>
+        </div>
+        <div class="inline-flex items-center gap-x-2">
+          @if(isFileUploadingCompleted){
+          <app-icon-done-svg />
+          <app-icon-delete-svg (click)="removeUploadedFile('pdf')" />
+          }
+        </div>
+      </div>
+      <!-- End Uploading File Content -->
+      @if(fileUploadPercentage > 0 && fileUploadPercentage < 100){
+      <app-progress-bar [width]="fileUploadPercentage" />
+      }
+    </div>
+  </div>
+</div>
