@@ -71,6 +71,7 @@ export class LibraryBookFormComponent {
       edition: [String.Empty],
       totalCopies: [1, [Validators.required, Validators.min(1)]],
       availableCopies: [1, [Validators.required, Validators.min(0)]],
+      index: [0]
     });
   }
 
@@ -108,6 +109,7 @@ export class LibraryBookFormComponent {
       edition: book?.Edition,
       totalCopies: book?.TotalCopies,
       availableCopies: book?.AvailableCopies,
+      index: book?.Index
     });
     this.coverImage = book?.CoverImage ?? null;
     this.file = book?.File ?? null;
@@ -131,6 +133,7 @@ export class LibraryBookFormComponent {
     if (this.bookForm.invalid) return;
 
     const payload: LibraryBook = {
+      Id: this.existingBookId,
       Title: this.bookForm.value.title,
       Description: this.bookForm.value.description,
       Author: this.bookForm.value.author,
@@ -143,6 +146,7 @@ export class LibraryBookFormComponent {
       AvailableCopies: this.bookForm.value.availableCopies,
       CoverImage: this.coverImage,
       File: this.file,
+      Index: Number(this.bookForm.value.index)
     };
 
     if (this.isEditMode) {

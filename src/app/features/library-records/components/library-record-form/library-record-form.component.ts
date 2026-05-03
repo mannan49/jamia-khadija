@@ -84,7 +84,6 @@ export class LibraryRecordFormComponent {
   fetchStudents() {
     this.studentsLoading = true;
     const studentFilter = new StudentFilter();
-    studentFilter.IsActive = true;
     studentFilter.PageIndex = 1;
     studentFilter.Limit = 1000;
     this.apiHttpService
@@ -164,6 +163,7 @@ export class LibraryRecordFormComponent {
         filter(res => !!res),
         tap((res: PagedResponse<LibraryRecord>) => {
           this.patchRecordForm(res?.Items?.[0]);
+          this.isOtherStudentSelected = res?.Items?.[0]?.Borrower?.RefId?.equals('Other');
         }),
         catchError(() => EMPTY),
         finalize(() => (this.recordLoading = false))

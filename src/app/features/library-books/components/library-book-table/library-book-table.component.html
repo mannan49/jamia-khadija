@@ -1,9 +1,10 @@
 <!-- Header Row -->
 <div class="hidden rounded-t-2xl md:grid grid-cols-14 bg-gray-200 font-bold text-gray-700 uppercase py-4 px-2">
-  <div class="col-span-1 pl-4"></div>
-  <div class="col-span-4">عنوان</div>
+  <div class="col-span-1 pr-4"></div>
+  <div class="col-span-1">نمبر شمار</div>
+  <div class="col-span-4 pr-6">عنوان</div>
   <div class="col-span-3">مصنف</div>
-  <div class="col-span-2 text-center">زمرہ</div>
+  <div class="col-span-1 text-center">زمرہ</div>
   <div class="col-span-1 text-center">زبان</div>
   <div class="col-span-3 text-center">اقدامات</div>
 </div>
@@ -12,7 +13,7 @@
   <div class="grid grid-cols-14 items-center border-b bg-main border-gray-200 py-4 px-2">
 
     <!-- Cover Image -->
-    <div class="col-span-12 md:col-span-1 pl-4">
+    <div class="col-span-12 md:col-span-1 pr-4">
       @if(book?.CoverImage?.Url) {
         <img
           [src]="cloudFrontUrl + book?.CoverImage?.Url"
@@ -24,12 +25,16 @@
       }
     </div>
 
-    <!-- Title — always visible -->
-    <div class="col-span-12 md:col-span-4 truncate font-medium">{{ book?.Title }}</div>
+    <div class="col-span-12 md:col-span-1 truncate font-medium pr-4"> 
+      @if(book?.Index){
+        {{ book?.Index }} 
+      }
+    </div>
+    <div class="col-span-12 md:col-span-4 truncate font-medium"> {{ book?.Title }} </div>
 
     <!-- Desktop-only columns -->
     <div class="col-span-3 truncate hidden md:block">{{ book?.Author }}</div>
-    <div class="col-span-2 text-center hidden md:block">{{ book?.Category }}</div>
+    <div class="col-span-1 text-center hidden md:block">{{ book?.Category }}</div>
     <div class="col-span-1 text-center hidden md:block">{{ book?.Language }}</div>
     
 

@@ -12,6 +12,7 @@ export class LibraryBook extends BaseEntity {
   Category: string;
   Edition: string;
   TotalCopies: number;
+  Index: number;
   AvailableCopies: number;
   CoverImage: Attachment;
   File: Attachment;
