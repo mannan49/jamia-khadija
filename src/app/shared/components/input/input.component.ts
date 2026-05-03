@@ -25,7 +25,7 @@ export class InputComponent {
   @Input() labelStyles = String.Empty;
   @Input() inputStyles = 'border-primary border-solid border-2 rounded-full px-4 py-1 focus:border-primary focus:outline-none';
   @Input() type = 'text';
-  @Input() digitsOnly: number = 0;
+  @Input() digitsOnly?: number;
 
   control: FormControl;
 

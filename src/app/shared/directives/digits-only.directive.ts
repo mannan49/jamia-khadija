@@ -5,12 +5,14 @@ import { Directive, ElementRef, HostListener, Input } from '@angular/core';
   standalone: true,
 })
 export class DigitsOnlyDirective {
-  @Input('appDigitsOnly') maxLength: number = 0;
+  @Input('appDigitsOnly') maxLength: number | null | undefined = null;
 
   constructor(private el: ElementRef) {}
 
   @HostListener('input')
   onInput() {
+    if (!this.maxLength) return;
+
     let value: string = this.el.nativeElement.value;
 
     value = value.replace(/\D/g, '');
