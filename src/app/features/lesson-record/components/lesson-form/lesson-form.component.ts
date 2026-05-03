@@ -102,9 +102,9 @@ export class LessonFormComponent {
         take(1),
         filter(res => !!res),
         tap((res: PagedResponse<Student>) => {
-          this.studentsList = res.Items.map(s => ({
-            Value: s.Id,
-            Display: `${s.Name}`,
+          this.studentsList = res?.Items.map(s => ({
+            Value: s?.Id,
+            Display: `${s?.Name}`,
           }));
         }),
         catchError(() => EMPTY),
@@ -115,7 +115,6 @@ export class LessonFormComponent {
 
   onStudentChange(studentId: string) {
     const selected = this.studentsList.find(s => s.Value === studentId);
-    // StudentName is the Display text before the dash
     const name = selected?.Display?.split('—')[0]?.trim() ?? String.Empty;
     this.lessonForm.patchValue({ studentName: name });
   }

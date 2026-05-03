@@ -1,0 +1,29 @@
+<div class="max-w-4xl mx-auto p-6">
+  <div class="mb-8">
+    <h1 class="text-3xl font-bold text-gray-900">ترتیبات</h1>
+    <p class="text-gray-600 mt-2">اپنے اکاؤنٹ اور ترجیحات کا انتظام کریں</p>
+  </div>
+
+  <div class="grid gap-4">
+    @for (option of settingItemsConstants; track $index) {
+      <div
+        class="bg-white rounded-lg border border-gray-200 p-6 hover:border-teal-300 hover:shadow-md transition-all duration-200 cursor-pointer group"
+        (click)="onOptionClick(option)"
+      >
+        <div class="flex items-center justify-between">
+          <div class="flex items-start space-x-4">
+            <div class="bg-green-50 p-3 rounded-lg group-hover:scale-110 transition-transform duration-200'">
+              <span class="material-icons">{{ option.icon }}</span>
+            </div>
+            <div class="flex-1">
+              <h3 class="text-lg font-semibold text-gray-900 group-hover:text-teal-700 transition-colors">
+                {{ option.title }}
+              </h3>
+              <p class="text-gray-600 mt-1">{{ option.description }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    }
+  </div>
+</div>

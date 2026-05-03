@@ -5,12 +5,15 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { catchError, EMPTY, filter, finalize, take, tap } from 'rxjs';
 
 import { Select } from '@models/shared/select.model';
+import { Student } from '@models/entities/student.model';
+import { ActionResponse } from '@models/response/action-response.model';
+
+import { GenderList } from '@constants/gender-list.constant';
+import { DepartmentList } from '@constants/department-list.constant';
+import { ToasterMessageConstants } from '@constants/toaster-message.constant';
 
 import { HotToastService } from '@ngxpert/hot-toast';
 import { ApiHttpService } from '@shared/services/api-http.service';
-import { ToasterMessageConstants } from '@constants/toaster-message.constant';
-import { Student } from '@models/entities/student.model';
-import { ActionResponse } from '@models/response/action-response.model';
 
 @Component({
   selector: 'app-student-form',
@@ -25,17 +28,8 @@ export class StudentFormComponent {
   studentForm: FormGroup;
   existingStudentId = String.Empty;
 
-  genderList: Select[] = [
-    { Value: 'male', Display: 'لڑکا' },
-    { Value: 'female', Display: 'لڑکی' },
-  ];
-
-  departmentsList: Select[] = [
-    { Value: 'hifz', Display: 'حفظ قرآن' },
-    { Value: 'nazra', Display: 'ناظرہ قرآن' },
-    { Value: 'dars_nizami', Display: 'درس نظامی' },
-    { Value: 'tajweed', Display: 'تجوید' },
-  ];
+  genderList: Select[] = GenderList;
+  departmentsList: Select[] = DepartmentList;
 
   constructor(
     private router: Router,
@@ -160,6 +154,10 @@ export class StudentFormComponent {
         })
       )
       .subscribe();
+  }
+
+  get isActive() {
+    return this.studentForm.get('isActive');
   }
 
   resetForm() {

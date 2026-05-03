@@ -6,6 +6,8 @@ export const BookCategoryList: Select[] = [
   { Value: 'سیرت', Display: 'سیرت' },
   { Value: 'فقہ', Display: 'فقہ' },
   { Value: 'عقیدہ', Display: 'عقیدہ' },
+  { Value: 'تاریخ', Display: 'تاریخ' },
+  { Value: 'بیانات', Display: 'بیانات' },
   { Value: 'اصول الفقہ', Display: 'اصول الفقہ' },
   { Value: 'نحو و صرف', Display: 'نحو و صرف' },
   { Value: 'دیگر', Display: 'دیگر' },

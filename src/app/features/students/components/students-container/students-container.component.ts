@@ -26,26 +26,6 @@ export class StudentsContainerComponent {
   selectedDepartment = String.Empty;
   pagedStudents: PagedResponse<Student>;
 
-  classesList: Select[] = [
-    { Value: 'پارہ 1', Display: 'پارہ ۱' },
-    { Value: 'پارہ 2', Display: 'پارہ ۲' },
-    { Value: 'پارہ 3', Display: 'پارہ ۳' },
-    { Value: 'ناظرہ', Display: 'ناظرہ' },
-    { Value: 'حفظ', Display: 'حفظ' },
-  ];
-
-  genderList: Select[] = [
-    { Value: 'male', Display: 'لڑکا' },
-    { Value: 'female', Display: 'لڑکی' },
-  ];
-
-  departmentsList: Select[] = [
-    { Value: 'hifz', Display: 'حفظ قرآن' },
-    { Value: 'nazra', Display: 'ناظرہ قرآن' },
-    { Value: 'dars_nizami', Display: 'درس نظامی' },
-    { Value: 'tajweed', Display: 'تجوید' },
-  ];
-
   constructor(
     private router: Router,
     private toast: HotToastService,

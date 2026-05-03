@@ -31,6 +31,7 @@ export class LibraryRecordFormComponent {
   studentsLoading = false;
   booksLoading = false;
   recordForm: FormGroup;
+  isOtherStudentSelected = false;
   existingRecordId = String.Empty;
 
   studentsList: Select[] = [];
@@ -94,8 +95,12 @@ export class LibraryRecordFormComponent {
         tap((res: PagedResponse<Student>) => {
           this.studentsList = res.Items.map(s => ({
             Value: s.Id,
-            Display: `${s.Name} — ${s.Class}`,
+            Display: `${s?.Name}  ولد ${s?.FatherName}`,
           }));
+          this.studentsList.push({
+            Value: 'Other',
+            Display: 'دیگر',
+          });
         }),
         catchError(() => EMPTY),
         finalize(() => (this.studentsLoading = false))
@@ -126,9 +131,21 @@ export class LibraryRecordFormComponent {
   }
 
   onStudentChange(studentId: string) {
+    this.isOtherStudentSelected = studentId.equals('Other');
+
     const selected = this.studentsList.find(s => s.Value === studentId);
     const name = selected?.Display?.split('—')[0]?.trim() ?? String.Empty;
+
     this.recordForm.patchValue({ borrowerText: name });
+
+    if (!this.isOtherStudentSelected) {
+      this.recordForm.patchValue({ borrowerText: name });
+    } else {
+      this.recordForm.patchValue({
+        borrowerText: String.Empty,
+        borrowerRefId: 'Other'
+      });
+    }
   }
 
   onBookChange(bookId: string) {

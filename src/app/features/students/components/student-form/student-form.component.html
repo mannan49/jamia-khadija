@@ -2,25 +2,37 @@
   @if (studentLoading) {
     <app-loader />
   } @else {
-    @if (isEditMode) {
-      <h1 class="font-bold text-2xl text-center my-2">طالبعلم کی تفصیل ترمیم کریں</h1>
-    } @else {
-      <h1 class="font-bold text-2xl text-center my-2">نئے طالبعلم کا اندراج</h1>
-    }
-
     <form [formGroup]="studentForm" (ngSubmit)="onSubmitForm()">
+      <div class="flex items-center justify-between my-2">
+        @if (isEditMode) {
+          <h1 class="font-bold text-2xl text-center flex-1">طالبعلم کی تفصیل ترمیم کریں</h1>
+        } @else {
+          <h1 class="font-bold text-2xl text-center flex-1">نئے طالبعلم کا اندراج</h1>
+        }
+
+        <!-- Active Toggle -->
+        <div class="flex items-center gap-2">
+          <span class="text-sm font-medium">
+            {{ isActive ? 'فعال' : 'غیر فعال' }}
+          </span>
+
+          <label class="relative inline-flex items-center cursor-pointer">
+            <input type="checkbox" class="sr-only peer" formControlName="isActive" />
+            <div
+              class="w-11 h-6 bg-gray-300 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:bg-primary after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border after:rounded-full after:h-5 after:w-5 after:transition-all"
+            ></div>
+          </label>
+        </div>
+      </div>
+
       <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mt-2">
         <app-input placeholder="طالبعلم کا نام درج کریں" label="نام" controlName="name" />
-        <app-input
-          placeholder="والد کا نام درج کریں"
-          label="والد کا نام"
-          controlName="fatherName"
-        />
+        <app-input placeholder="والد کا نام درج کریں" label="والد کا نام" controlName="fatherName" />
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mt-5">
-        <app-input placeholder="داخلہ نمبر درج کریں" label="داخلہ نمبر" controlName="registrationNumber" />
-        <app-input placeholder="رابطہ نمبر درج کریں" label="رابطہ نمبر" controlName="phone" />
+        <app-input placeholder="داخلہ نمبر درج کریں" type="number" [digitsOnly]="6" label="داخلہ نمبر" controlName="registrationNumber" />
+        <app-input placeholder="رابطہ نمبر درج کریں" type="number" [digitsOnly]="11" label="رابطہ نمبر" controlName="phone" />
 
         <!-- <app-select
           placeholder="جماعت منتخب کریں"
@@ -37,12 +49,6 @@
           controlName="gender"
           [options]="genderList"
         />
-        <app-select
-          placeholder="شعبہ منتخب کریں"
-          label="شعبہ"
-          controlName="department"
-          [options]="departmentsList"
-        />
       </div> -->
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mt-5">
@@ -51,19 +57,12 @@
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mt-5">
-        <app-input
-          placeholder="00000-0000000-0"
-          label="طالبعلم کا شناختی کارڈ"
-          controlName="cnic"
-        />
-        <app-input
-          placeholder="00000-0000000-0"
-          label="والد کا شناختی کارڈ"
-          controlName="parentCnic"
-        />
+        <app-input type="number" placeholder="00000-0000000-0" [digitsOnly]="13" label="طالبعلم کا شناختی کارڈ" controlName="cnic" />
+        <app-input type="number" placeholder="00000-0000000-0" [digitsOnly]="13" label="والد کا شناختی کارڈ" controlName="parentCnic" />
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mt-5">
+        <app-select placeholder="شعبہ منتخب کریں" label="شعبہ" controlName="department" [options]="departmentsList" />
         <app-input placeholder="گھر کا پتہ درج کریں" label="پتہ" controlName="address" />
       </div>
 

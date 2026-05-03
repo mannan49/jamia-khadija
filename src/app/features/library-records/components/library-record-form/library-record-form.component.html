@@ -27,6 +27,15 @@
             [options]="studentsList"
             (selectionChanged)="onStudentChange($event)"
           />
+          @if(isOtherStudentSelected) {
+            <div class="mt-3">
+              <app-input
+                label="طالبعلم کا نام"
+                placeholder="طالبعلم کا نام درج کریں"
+                controlName="borrowerText"
+              />
+            </div>
+          }
         }
 
         @if(booksLoading) {

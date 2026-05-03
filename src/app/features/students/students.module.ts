@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
+import { CnicPipe } from '@shared/pipes/cnic.pipe';
 import { StudentsRoutingModule } from './students-routing.module';
 
 import { InputComponent } from '@shared/components/input/input.component';
@@ -12,10 +13,11 @@ import { DropdownComponent } from '@shared/components/dropdown/dropdown.componen
 import { StudentFormComponent } from './components/student-form/student-form.component';
 import { SearchBarComponent } from '@shared/components/search-bar/search-bar.component';
 import { StudentsTableComponent } from './components/students-table/students-table.component';
+import { DownloadRecordComponent } from './components/download-record/download-record.component';
 import { StudentsContainerComponent } from './components/students-container/students-container.component';
 import { PaginationActionsComponent } from '@shared/components/pagination-actions/pagination-actions.component';
 import { StudentLessonRecordComponent } from './components/student-lesson-record/student-lesson-record.component';
-import { DownloadRecordComponent } from './components/download-record/download-record.component';
+import { DigitsOnlyDirective } from '@shared/directives/digits-only.directive';
 
 @NgModule({
   declarations: [
@@ -26,6 +28,7 @@ import { DownloadRecordComponent } from './components/download-record/download-r
     DownloadRecordComponent,
   ],
   imports: [
+    CnicPipe,
     FormsModule,
     CommonModule,
     InputComponent,
@@ -34,6 +37,7 @@ import { DownloadRecordComponent } from './components/download-record/download-r
     ButtonComponent,
     DropdownComponent,
     SearchBarComponent,
+    DigitsOnlyDirective,
     ReactiveFormsModule,
     StudentsRoutingModule,
     PaginationActionsComponent,

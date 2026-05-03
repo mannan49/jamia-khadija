@@ -47,6 +47,7 @@ export class AttendanceFormComponent implements OnInit {
   loadStudents() {
     this.studentsLoading = true;
     const studentFilter = new StudentFilter();
+    studentFilter.IsActive = true;
     studentFilter.Limit = 1000;
 
     this.apiHttpService

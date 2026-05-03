@@ -39,6 +39,10 @@ const routes: Routes = [
         path: 'attendance',
         loadChildren: () => import('./features/attendance/attendance.module').then(m => m.AttendanceModule),
       },
+      {
+        path: 'settings',
+        loadChildren: () => import('./features/settings/settings.module').then(m => m.SettingsModule),
+      },
     ],
   },
   {

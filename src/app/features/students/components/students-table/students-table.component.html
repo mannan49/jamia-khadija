@@ -10,7 +10,11 @@
 </div>
 
 @for(student of pagedStudents?.Items; track $index) {
-  <div class="grid grid-cols-14 items-center border-b bg-main border-gray-200 py-4 px-2">
+  <div class="grid grid-cols-14 items-center border-b bg-main border-gray-200 py-4 px-2"
+    [ngClass]="{
+      'bg-main': student?.IsActive,
+      'bg-gray-100 text-gray-600 opacity-90': !student?.IsActive
+    }">
     <!-- Name — always visible -->
     <div class="col-span-12 md:col-span-3 truncate pl-4 font-medium">{{ student?.Name }}</div>
 
@@ -20,7 +24,7 @@
       {{ student?.RegistrationNumber }}
     </div>
     <div class="col-span-2 text-center hidden md:block">{{ student?.EnrollmentDate | date }}</div>
-    <div class="col-span-2 text-center text-sm hidden md:block">{{ student?.Cnic }}</div>
+    <div class="col-span-2 text-center text-sm hidden md:block">{{ student?.Cnic | cnic }}</div>
     <div class="col-span-2 text-center text-sm hidden md:block">{{ student?.Phone }}</div>
 
     <!-- Actions — always visible -->
