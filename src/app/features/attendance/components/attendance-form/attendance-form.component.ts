@@ -7,12 +7,13 @@ import { Student } from '@models/entities/student.model';
 import { StudentFilter } from '@models/payload/student-filter.model';
 import { PagedResponse } from '@models/response/paged-response.model';
 import { ActionResponse } from '@models/response/action-response.model';
+import { AttendanceBatchPayload, AttendanceEntryPayload } from '@models/payload/attendance-entry.model';
+
+import { AttendanceStatus } from '@enums/attendace-status.enum';
+import { ToasterMessageConstants } from '@constants/toaster-message.constant';
 
 import { HotToastService } from '@ngxpert/hot-toast';
 import { ApiHttpService } from '@shared/services/api-http.service';
-import { ToasterMessageConstants } from '@constants/toaster-message.constant';
-import { AttendanceBatchPayload, AttendanceEntryPayload } from '@models/payload/attendance-entry.model';
-import { AttendanceStatus } from '@enums/attendace-status.enum';
 
 @Component({
   selector: 'app-attendance-form',
@@ -60,9 +61,9 @@ export class AttendanceFormComponent implements OnInit {
           this.attendanceEntries = res.Items.map(s => ({
             StudentId: s?.Id,
             StudentName: s?.Name,
-            Class: 'حفظ',
-            Department: 'حفظ',
-            Status: 'Present',
+            Class: s?.Class,
+            Department: s?.Department,
+            Status: AttendanceStatus.PRESENT,
             LeaveReason: String.Empty,
           }));
         }),
