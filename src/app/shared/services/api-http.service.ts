@@ -18,6 +18,7 @@ import { ActionResponse } from '@models/response/action-response.model';
 import { AttendanceFilter } from '@models/payload/attendance-filter.model';
 import { LibraryBookFilter } from '@models/payload/library-book-filter.model';
 import { LessonRecordFilter } from '@models/payload/lesson-record-filter.model';
+import { DashboardAnalytics } from '@models/response/dashboard-analytics.model';
 import { LibraryRecordFilter } from '@models/payload/library-record-filter.model';
 import { UploadPreSignedUrlResponse } from '@models/response/upload-pre-signed-url-response.model';
 import { AttendanceBatchPayload, AttendanceEntryPayload } from '@models/payload/attendance-entry.model';
@@ -27,6 +28,10 @@ import { AttendanceBatchPayload, AttendanceEntryPayload } from '@models/payload/
 })
 export class ApiHttpService {
   constructor(private httpClient: HttpClient) {}
+
+  getDashboardAnalytics(): Observable<DashboardAnalytics> {
+    return this.httpClient.get<DashboardAnalytics>(ApiUrlService.getDashboardAnalyticsUrl());
+  }
 
   //#region Auth
   login(email: string, password: string): Observable<AuthResponse> {

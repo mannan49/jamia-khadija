@@ -159,8 +159,8 @@
     @if (pagedLessonRecords?.TotalCount > pagedLessonRecords?.PageSize) {
       <div class="grid grid-cols-12 items-center py-4">
         <div class="col-span-12 md:col-span-4 text-center md:text-left">
-          {{ pagedLessonRecords?.Items?.length * pagedLessonRecords?.PageIndex }} میں سے
-          {{ pagedLessonRecords?.TotalCount }} دکھائے جا رہے ہیں
+          {{ pagedLessonRecords?.TotalCount }} میں سے
+          {{ pagedLessonRecords?.Items?.length }} دکھائے جا رہے ہیں
         </div>
         <div class="col-span-12 md:col-span-8">
           <app-pagination-actions

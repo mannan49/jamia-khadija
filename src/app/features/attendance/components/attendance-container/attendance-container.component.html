@@ -97,7 +97,7 @@
       @if (pagedAttendance?.TotalCount > pagedAttendance?.PageSize) {
         <div class="grid grid-cols-12 items-center py-4">
           <div class="col-span-12 md:col-span-4 text-center md:text-left">
-            {{ pagedAttendance?.Items?.length * pagedAttendance?.PageIndex }} میں سے {{ pagedAttendance?.TotalCount }} دکھائے جا رہے ہیں
+            {{ pagedAttendance?.TotalCount }} میں سے {{ pagedAttendance?.Items?.length }} دکھائے جا رہے ہیں
           </div>
           <div class="col-span-12 md:col-span-8">
             <app-pagination-actions [pagedResponse]="pagedAttendance" (pageChanged)="handlePageChange($event)" />

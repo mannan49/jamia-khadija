@@ -1,9 +1,119 @@
 @if(loading) {
-    <div class="mt-20">
-      <app-loader />
+  <div class="mt-20">
+    <app-loader />
+  </div>
+} @else {
+  <div class="px-4 sm:px-6 lg:px-8 py-4">
+
+    <!-- Page title -->
+    <h1 class="text-2xl font-bold mb-4">ڈیش بورڈ</h1>
+
+    <!-- ── Row 1: Student Cards ───────────────────────────────────────────── -->
+    <div class="grid gap-3 grid-cols-1 md:grid-cols-3 mb-4">
+
+      <div class="bg-main rounded-2xl shadow-sm p-5 flex items-center gap-4">
+        <div class="w-14 h-14 rounded-full bg-primary bg-opacity-10 flex items-center justify-center shrink-0">
+          <span class="icon-users text-2xl text-primary"></span>
+        </div>
+        <div>
+          <div class="text-3xl font-bold text-stroke">{{ dashboard?.TotalStudents ?? 0 }}</div>
+          <div class="text-sm text-gray-500 mt-0.5">کل طلبہ</div>
+        </div>
+      </div>
+
+      <div class="bg-main rounded-2xl shadow-sm p-5 flex items-center gap-4">
+        <div class="w-14 h-14 rounded-full bg-emerald-50 flex items-center justify-center shrink-0">
+          <span class="icon-book text-2xl text-emerald-600"></span>
+        </div>
+        <div>
+          <div class="text-3xl font-bold text-emerald-700">{{ dashboard?.TotalHifzStudents ?? 0 }}</div>
+          <div class="text-sm text-gray-500 mt-0.5">حفظ قرآن طلبہ</div>
+        </div>
+      </div>
+
+      <div class="bg-main rounded-2xl shadow-sm p-5 flex items-center gap-4">
+        <div class="w-14 h-14 rounded-full bg-blue-50 flex items-center justify-center shrink-0">
+          <span class="icon-graduation text-2xl text-blue-600"></span>
+        </div>
+        <div>
+          <div class="text-3xl font-bold text-blue-700">{{ dashboard?.TotalDarsENizamiStudents ?? 0 }}</div>
+          <div class="text-sm text-gray-500 mt-0.5">درس نظامی طلبہ</div>
+        </div>
+      </div>
+
     </div>
-} @else { 
-    <div class="grid gap-2 grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
-      
+
+    <!-- ── Row 2: Library + Records ──────────────────────────────────────── -->
+    <div class="grid gap-3 grid-cols-2 md:grid-cols-4 mb-4">
+
+      <div class="bg-main rounded-2xl shadow-sm p-5 flex items-center gap-3">
+        <div class="w-11 h-11 rounded-full bg-amber-50 flex items-center justify-center shrink-0">
+          <span class="icon-book text-xl text-amber-600"></span>
+        </div>
+        <div>
+          <div class="text-2xl font-bold text-amber-700">{{ dashboard?.TotalBooks ?? 0 }}</div>
+          <div class="text-xs text-gray-500 mt-0.5">کل کتابیں</div>
+        </div>
+      </div>
+
+      <div class="bg-main rounded-2xl shadow-sm p-5 flex items-center gap-3">
+        <div class="w-11 h-11 rounded-full bg-orange-50 flex items-center justify-center shrink-0">
+          <span class="icon-arrow-left text-xl text-orange-600"></span>
+        </div>
+        <div>
+          <div class="text-2xl font-bold text-orange-700">{{ dashboard?.BooksIssued ?? 0 }}</div>
+          <div class="text-xs text-gray-500 mt-0.5">جاری کتابیں</div>
+        </div>
+      </div>
+
+      <div class="bg-main rounded-2xl shadow-sm p-5 flex items-center gap-3">
+        <div class="w-11 h-11 rounded-full bg-purple-50 flex items-center justify-center shrink-0">
+          <span class="icon-calendar text-xl text-purple-600"></span>
+        </div>
+        <div>
+          <div class="text-2xl font-bold text-purple-700">{{ dashboard?.TotalAttendanceRecords ?? 0 }}</div>
+          <div class="text-xs text-gray-500 mt-0.5">حاضری ریکارڈ</div>
+        </div>
+      </div>
+
+      <div class="bg-main rounded-2xl shadow-sm p-5 flex items-center gap-3">
+        <div class="w-11 h-11 rounded-full bg-teal-50 flex items-center justify-center shrink-0">
+          <span class="icon-edit text-xl text-teal-600"></span>
+        </div>
+        <div>
+          <div class="text-2xl font-bold text-teal-700">{{ dashboard?.TotalLessonRecords ?? 0 }}</div>
+          <div class="text-xs text-gray-500 mt-0.5">سبق ریکارڈ</div>
+        </div>
+      </div>
+
     </div>
+
+    <!-- ── Books by Category ──────────────────────────────────────────────── -->
+    <div class="bg-main rounded-2xl shadow-sm p-5">
+      <h3 class="font-bold text-base mb-4">موضوع کے مطابق کتابیں</h3>
+
+      @if(dashboard?.BooksByCategory?.length > 0) {
+        <div class="flex flex-col gap-3">
+          @for(cat of dashboard?.BooksByCategory; track $index) {
+            <div class="flex items-center gap-3">
+              <!-- Category name -->
+              <div class="w-28 text-sm font-medium text-right shrink-0">{{ cat?.Display }}</div>
+              <!-- Bar -->
+              <div class="flex-1 h-7 bg-gray-100 rounded-full overflow-hidden">
+                <div
+                  class="h-full bg-primary rounded-full flex items-center justify-end pr-2 transition-all duration-700"
+                  [style.width.%]="getCategoryBarWidth(cat?.Value)"
+                >
+                  <span class="text-white text-xs font-bold px-2">{{ cat?.Value }}</span>
+                </div>
+              </div>
+            </div>
+          }
+        </div>
+      } @else {
+        <div class="text-center text-gray-400 py-6 text-sm">ابھی کوئی کتاب نہیں</div>
+      }
+    </div>
+
+  </div>
 }

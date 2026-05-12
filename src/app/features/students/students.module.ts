@@ -3,7 +3,9 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { CnicPipe } from '@shared/pipes/cnic.pipe';
+import { PhonePipe } from '@shared/pipes/phone.pipe';
 import { StudentsRoutingModule } from './students-routing.module';
+import { DigitsOnlyDirective } from '@shared/directives/digits-only.directive';
 
 import { InputComponent } from '@shared/components/input/input.component';
 import { SelectComponent } from '@shared/components/select/select.component';
@@ -17,7 +19,6 @@ import { DownloadRecordComponent } from './components/download-record/download-r
 import { StudentsContainerComponent } from './components/students-container/students-container.component';
 import { PaginationActionsComponent } from '@shared/components/pagination-actions/pagination-actions.component';
 import { StudentLessonRecordComponent } from './components/student-lesson-record/student-lesson-record.component';
-import { DigitsOnlyDirective } from '@shared/directives/digits-only.directive';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { DigitsOnlyDirective } from '@shared/directives/digits-only.directive';
   ],
   imports: [
     CnicPipe,
+    PhonePipe,
     FormsModule,
     CommonModule,
     InputComponent,

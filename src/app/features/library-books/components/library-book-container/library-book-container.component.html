@@ -48,7 +48,7 @@
     @if(pagedLibraryBooks?.TotalCount > pagedLibraryBooks?.PageSize) {
       <div class="grid grid-cols-12 items-center py-4">
         <div class="col-span-12 md:col-span-4 text-center md:text-left">
-          {{ pagedLibraryBooks?.Items?.length * pagedLibraryBooks?.PageIndex }} میں سے {{ pagedLibraryBooks?.TotalCount }} دکھائے جا رہے ہیں
+          {{ pagedLibraryBooks?.TotalCount }} میں سے {{  pagedLibraryBooks?.Items?.length }} دکھائے جا رہے ہیں
         </div>
         <div class="col-span-12 md:col-span-8">
           <app-pagination-actions

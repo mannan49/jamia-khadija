@@ -52,6 +52,8 @@ export class LibraryBookContainerComponent {
     libraryBookFilter.Category = this.selectedCategory;
     libraryBookFilter.Language = this.selectedLanguage;
     libraryBookFilter.Query = this.searchedQuery;
+    libraryBookFilter.SortField = "Index";
+    libraryBookFilter.SortOrder = "asc";
     return libraryBookFilter;
   }
 

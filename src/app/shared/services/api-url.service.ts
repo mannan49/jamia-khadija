@@ -7,6 +7,10 @@ import { environment } from 'src/environments/environment';
 export class ApiUrlService {
   static apiBaseUrl = environment.apiBaseUrl;
 
+  static getDashboardAnalyticsUrl(): string {
+    return `${this.apiBaseUrl}/Dashboard/jamia-khadija`;
+  }
+
   //#region Auth
 
   static loginUrl(email: string, password: string): string {
